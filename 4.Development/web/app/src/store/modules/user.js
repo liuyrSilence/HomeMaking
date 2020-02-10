@@ -19,6 +19,7 @@ export default {
     async login(context,payload){
       // 1.登录
       let response = await post_json("/user/login",payload);
+      console.log("payload",payload)
       let token = response.data.token;
       // 2.将token缓存起来？localStorage
       setToken(token);
@@ -27,7 +28,7 @@ export default {
     },
     // 通过token获取info
     async info(context,token){
-      console.log('info');
+      // console.log('info');
       let response = await get("/user/info",{token});
       // 将用户信息设置到info中
       await context.commit("refreshInfo",response.data)

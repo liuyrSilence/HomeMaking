@@ -3,7 +3,7 @@ import qs from 'qs'
 import {Toast} from 'vant'
 
 // 全局配置
-axios.defaults.baseURL = 'http://47.93.255.92:6677';
+axios.defaults.baseURL = 'http://134.175.100.63:6677';
 
 
 // Add a response interceptor

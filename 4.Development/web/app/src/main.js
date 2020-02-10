@@ -9,8 +9,10 @@ import './common.css'
 import FullLayout from './components/FullLayout'
 import OrderItem from './components/OrderItem'
 import ProductItem from './components/ProductItem'
+import AddressItem from './components/AddressItem'
 Vue.component('briup-fulllayout',FullLayout)
 Vue.component('briup-order-item',OrderItem)
+Vue.component('briup-address-item',AddressItem)
 Vue.component('briup-product-item',ProductItem)
 
 Vue.config.productionTip = false

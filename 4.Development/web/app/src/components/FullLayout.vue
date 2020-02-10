@@ -28,4 +28,7 @@ export default {
   width: 100%;
   background-color: #ffffff;
 }
+.van-nav-bar{
+  border-bottom: 1px solid #ccc;
+}
 </style>

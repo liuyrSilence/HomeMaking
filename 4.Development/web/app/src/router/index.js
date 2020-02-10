@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import Manager from '../views/manager/Index'
 import Home from '../views/manager/Home'
 import Order from '../views/manager/Order'
+import Product from '../views/manager/product/List'
+import Help from '../views/manager/Help'
 import User from '../views/manager/User'
 import Address from '../views/manager/address/List'
 import AddressEdit from '../views/manager/address/Edit'
@@ -47,6 +49,12 @@ const routes = [
     },{
       path: 'order',
       component: Order,
+    },{
+      path: 'product_list',
+      component: Product,
+    },{
+      path: 'help',
+      component: Help,
     },{
       path: 'user',
       component: User,
