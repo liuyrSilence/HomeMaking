@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">家政服务平台</h3>
+        <h3 class="title">家政预约平台</h3>
       </div>
 
       <el-form-item prop="username">
@@ -98,8 +98,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '123321',
-        type:"manager"
+        password: '111111'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -139,17 +138,9 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    checkCapslock({ shiftKey, key } = {}) {
-      if (key && key.length === 1) {
-        if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-          this.capsTooltip = true
-        } else {
-          this.capsTooltip = false
-        }
-      }
-      if (key === 'CapsLock' && this.capsTooltip === true) {
-        this.capsTooltip = false
-      }
+    checkCapslock(e) {
+      const { key } = e
+      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
     showPwd() {
       if (this.passwordType === 'password') {

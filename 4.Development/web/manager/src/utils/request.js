@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
@@ -20,7 +19,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers['token'] = getToken()
     }
     return config
   },
@@ -44,8 +43,33 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const data = response.data
-    return data
+    const res = response.data
+
+    // if the custom code is not 20000, it is judged as an error.
+    if (res.status !== 200) {
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      })
+
+      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+        // to re-login
+        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+          confirmButtonText: 'Re-Login',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
+        })
+      }
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return res
+    }
   },
   error => {
     console.log('err' + error) // for debug
@@ -57,39 +81,5 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-export function get (url, params) {
-  return service.get(url,{
-    params, // get 请求时带的参数
-    timeout: 10000,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  })
-}
-// 自定义post
-export function post(url,data){
-  return service.post(url, qs.stringify(data),{
-    timeout:10000,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-  })
-}
-
-/**
- * 提交post请求 发送的数据为查询字符串，当参数为数组的时候适用该方法
- * ids=1&ids=2
-*/
-export function post_array(url,data){
-  return service.post(url,qs.stringify(data,{arrayFormat:"repeat"}),{
-    timeout:10000,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-  })
-}
 
 export default service
