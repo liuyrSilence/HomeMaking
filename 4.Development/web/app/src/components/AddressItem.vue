@@ -13,15 +13,44 @@
         </div>
       </van-col>
       <van-col :span="3" class="option">
-        <van-icon name="edit" size="larger" /> &nbsp;
-        <van-icon name="delete" size="larger" />
+        <van-icon @click="editAddressHandler(data)" name="edit" size="larger" /> &nbsp;
+        <van-icon @click="deleteAddressHandler()" name="delete" size="larger" />
       </van-col>
     </van-row>
+    <!-- {{data}} -->
   </div>
 </template>
 <script>
+import { Dialog } from 'vant';
+import {mapState,mapActions} from 'vuex'
+
 export default {
-  props:['data']
+  props:['data'],
+  computed: {
+    ...mapState('address',['addresses'])
+  },
+  created() {
+
+  },
+  methods: {
+    ...mapActions('address',['deleteAddressById']),
+    editAddressHandler(data){
+      // alert("编辑")
+      // console.log(data,'==')
+      this.$router.push({path:'/manager/address_edit',query:data})
+    },
+    deleteAddressHandler(){
+      // alert("是否删除该地址")
+      Dialog.confirm({
+        message: '是否删除该地址？'
+      }).then(() => {
+        // 调用方法，删除地址
+        this.deleteAddressById(this.data.id)
+      }).catch(() => {
+        // on cancel
+      });
+    },
+  }
 }
 </script>
 <style scoped>
@@ -33,8 +62,8 @@ export default {
 }
 .address_item .yuan {
   margin: 0 auto;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.2em;
+  height: 1.2em;
   border-radius: 50%;
   border: 1px solid #ccc;
   

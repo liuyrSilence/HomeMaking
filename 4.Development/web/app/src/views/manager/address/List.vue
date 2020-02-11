@@ -1,24 +1,17 @@
 <template>
-    <div>
-        <!-- 顶部导航栏 -->
-        <!-- <div class="title">
-        <van-row>
-            <van-col span="8">
-            <van-icon size="45" style="padding:12px" name="arrow-left" color="orange"/>
-            </van-col>
-            <van-col span="10" style="font-size:26px;color:#333333;padding:16px;">常用地址</van-col>
-            <van-col span="6" style="font-size:22px;color:orange;padding:20px 0 0 20px;">新增地址</van-col>
-        </van-row>
-        </div> -->
+    <div> 
         <briup-fulllayout title="地址列表">
             <div class="address" >
+                <!-- 地址列表 -->
                 <div class="list">
                     <briup-address-item v-for="address in addresses" :key="address.id" :data="address"></briup-address-item>
                 </div>
+                <!-- /地址列表 -->
+                <!-- 新增地址 -->
+                <van-button @click="addAddressHandler()" size="large" type="warning">新增地址</van-button>
+                <!-- /新增地址 -->
             </div>
         </briup-fulllayout>
-        <!-- /顶部导航栏 -->
-
     </div>
 </template>
 
@@ -38,6 +31,10 @@ export default {
     },
     methods: {
         ...mapActions('address',['findAllAddresses']),
+        // 新增地址
+        addAddressHandler(){
+            this.$router.push({path:'/manager/address_add'})
+        }
        
     }
 }

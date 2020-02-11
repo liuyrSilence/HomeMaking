@@ -9,6 +9,7 @@ import Help from '../views/manager/Help'
 import User from '../views/manager/User'
 import Address from '../views/manager/address/List'
 import AddressEdit from '../views/manager/address/Edit'
+import AddressAdd from '../views/manager/address/Add'
 import OrderConform from '../views/manager/order/Conform'
 // 登录页面
 import Login from '../views/Login'
@@ -64,6 +65,9 @@ const routes = [
     },{
       path: 'address_edit',
       component: AddressEdit
+    },{
+      path: 'address_add',
+      component: AddressAdd
     },{
       path: 'order_conform',
       component: OrderConform

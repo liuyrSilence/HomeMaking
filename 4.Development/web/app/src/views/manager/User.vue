@@ -1,5 +1,8 @@
 <template>
   <div class="user">
+    <div class="title">
+      <van-nav-bar title="我的" />
+    </div>
     <div class="header">
       <div class="photo">
         <img src="../../assets/user.png" alt=""/>
