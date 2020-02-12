@@ -1,0 +1,204 @@
+<template>
+    <div class="product">
+        <!-- 按钮 -->
+        <el-button type="primary" size="small" @click='toAddHandler'>添加</el-button>
+        <div class="select">
+            <el-select v-model="categoryForm" placeholder="请选择">
+            <el-option
+            v-for="item in categorys"
+            :key="item.id"
+            :value="item.id"
+            :label="item.name"
+            >
+            </el-option>
+        </el-select>
+        <el-button type="primary" size="small">查询</el-button>
+        </div>
+        <!-- 按钮 -->
+        <!-- 表格 -->
+        <el-table
+        :data="products"
+        stripe
+        style="width: 100%">
+        <el-table-column
+        prop="id"
+        label="编号"
+        width="80">
+        </el-table-column>
+        <el-table-column
+        align='center'
+        prop="name"
+        label="产品名称"
+        width="180">
+        </el-table-column>
+        <el-table-column
+        align='center'
+        prop="price"
+        label="价格"
+        width="200">
+        </el-table-column>
+        <el-table-column
+        prop="description"
+        label="产品描述"
+        width="200">
+        </el-table-column>
+        <el-table-column
+        prop="categoryId"
+        label="所属产品"
+        width="280">
+        </el-table-column>
+        <el-table-column
+        align='center'
+        fixed="right"
+        label="操作"
+        width="150">
+        <template slot-scope="scope">
+            <el-button @click="deleteHandler(scope.row.id)" type="text" size="small">删除</el-button>
+            <el-button @click="editHandler(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="detailsHandler(scope.row)"type="text" size="small">详情</el-button>
+        </template>
+        </el-table-column>
+        </el-table>
+        <!-- 表格 -->
+        <!-- 分页 -->
+        <el-pagination
+            layout="prev, pager, next"
+            :total="50">
+        </el-pagination>
+        <!-- 分页 -->
+        <!-- 模态框 -->
+        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+        <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px">
+            <el-form-item label="产品名称" prop='name'>
+            <el-input v-model="form.name" clearable=true placeholder='请输入产品名称'></el-input>
+            </el-form-item>
+            <el-form-item label="价格" prop='price'>
+            <el-input v-model="form.price" clearable=true placeholder='请输入价格'></el-input>
+            </el-form-item>
+            <el-form-item label="所属栏目" prop='categoryId'>
+            <el-select  v-model="form.categoryId" placeholder="请选择所属栏目">
+                <el-option v-for='c in categorys' :label="c.id" :value="c.id" :key="c.id"></el-option>
+            </el-select>
+            </el-form-item>
+            <el-form-item label="介绍" prop='description'>
+            <el-input type='textarea' v-model="form.description" clearable=true placeholder='请输入产品介绍'></el-input>
+            </el-form-item>
+            <div class='upload'>
+            <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-remove="beforeRemove"
+            multiple
+            :limit="3"
+            :on-exceed="handleExceed"
+            :file-list="fileList">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+            </div>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="close('ruleForm')">取 消</el-button>
+            <el-button type="primary" @click="submit('ruleForm')">确 定</el-button>
+        </div>
+        </el-dialog>
+        <!-- 模态框 -->
+    </div>
+</template>
+<script>
+import {mapState,mapActions} from 'vuex'
+export default {
+    data(){
+        return {
+            title:'添加产品信息',
+            dialogFormVisible:false,
+            form:{},
+            categoryForm:{},
+            ruleForm:{
+                name:'',
+                price:'',
+                category:'',
+            },
+            rules: {
+            name: [
+                { required: true, message: '请输入产品名称', trigger: 'blur' },
+            ],
+            price: [
+                { required: true, message: '请输入价格', trigger: 'blur' }
+            ],
+            categoryId: [
+                { required: true, message: '请选择所属栏目', trigger: 'blur' }
+            ],
+            }
+        }
+    },
+    created() {
+        this.findAllproduct(),
+        this.findAllcategory()
+    },
+    computed: {
+        ...mapState('product',['products']),
+        ...mapState('category',['categorys']),
+    },
+    methods: {
+        ...mapActions('product',['findAllproduct','saveProduct','deleteProduct']),
+        ...mapActions('category',['findAllcategory']),
+        //添加打开模态框
+        toAddHandler(){
+            this.form={}
+            this.dialogFormVisible=true
+        },
+        //取消关闭模态框
+        close(form){
+            this.dialogFormVisible=false
+            this.$refs[form].resetFields()
+        },
+        //提交保存
+        submit(form){
+            this.$refs[form].validate((valid) => {
+            if (valid) {
+                this.saveProduct(this.form)
+                this.dialogFormVisible=false
+                this.$message({
+                showClose: true,
+                message: '更新成功',
+                type: 'success'
+                });
+            } else {
+                return false;
+            }
+            });
+        },
+        //删除订单信息
+        deleteHandler(id){
+            this.deleteProduct(id)
+            this.$message({
+            showClose: true,
+            message: '删除成功',
+            type: 'success'
+            });
+        },
+         //修改订单信息
+        editHandler(custermerForm){
+            this.title='修改订单信息'
+            this.form=custermerForm
+            this.dialogFormVisible=true
+        },
+        //详情页面
+        detailsHandler(id){
+            this.$router.push({name:'productDetails',params:{id:id}})
+        }
+    },
+}
+</script>
+<style scoped>
+.select{
+    margin-left: 5em;
+    margin-top: -2em;
+}
+.upload{
+    margin-left:9em;
+}
+</style>
