@@ -3,13 +3,10 @@
         <!-- 按钮 -->
         <el-button type="primary" size="small" @click='toAddHandler'>添加</el-button>
         <div class="select">
-            <el-select v-model="value" placeholder="请选择">
-            <el-option
-            v-for="item in options"
-            >
-            </el-option>
-        </el-select>
-        <el-button type="primary" size="small">查询</el-button>
+            <el-input  v-model="list.status" clearable=true placeholder='请输入状态'></el-input>
+            <div class='btn'>
+            <el-button type="primary" @click="submitHanlderbyStatus" size="small">查询</el-button>
+            </div>
         </div>
         <!-- 按钮 -->
         <!-- 表格 -->
@@ -53,8 +50,10 @@
         <!-- 表格 -->
         <!-- 分页 -->
         <el-pagination
-            layout="prev, pager, next"
-            :total="50">
+            layout="total,prev, pager, next"
+            @current-change="changePageNum"
+            :page-size="this.list.pageSize"
+            :total="total">
         </el-pagination>
         <!-- 分页 -->
         <!-- 模态框 -->
@@ -92,6 +91,10 @@ import {mapState,mapActions} from 'vuex'
 export default {
     data(){
         return {
+            list:{
+                page:0,
+                pageSize:6
+            },
             title:'添加顾客信息',
             form:{},
             ruleForm:{
@@ -122,13 +125,13 @@ export default {
         }
     },
     created(){
-        this.findAllcustermer()
+        this.queryCustermer(this.list)
     },
     computed:{
-        ...mapState('custermer',['custermers'])
+        ...mapState('custermer',['custermers','total'])
     },
     methods:{
-        ...mapActions('custermer',['findAllcustermer','saveCustermer','deleteCustermer']),
+        ...mapActions('custermer',['findAllcustermer','saveCustermer','deleteCustermer','queryCustermer']),
         //去添加，打开模态框
         toAddHandler(){
             this.form={}
@@ -157,12 +160,22 @@ export default {
         },
         //删除顾客信息
         deleteHandler(id){
+            this.$confirm('此操作将永久删除这条数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
             this.deleteCustermer(id)
-            this.$message({
-            showClose: true,
-            message: '删除成功',
-            type: 'success'
-            });
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
         },
         //修改顾客信息
         editHandler(custermerForm){
@@ -173,13 +186,28 @@ export default {
         //详情页面
         detailsHandler(id){
             this.$router.push({name:'details',params:{id:id}})
+        },
+        //分页
+        changePageNum(page){
+            this.list.page = page-1;
+            this.queryCustermer(this.list)
+        },
+        //模糊查询
+        submitHanlderbyStatus(){
+            this.queryCustermer(this.list)
         }
     }
 }
 </script>
 <style scoped>
 .select{
+    width:200px;
     margin-left: 5em;
     margin-top: -2em;
+    margin-bottom:1em;
+}
+.btn{
+    margin-left: 13em;
+    margin-top: -34px;
 }
 </style>

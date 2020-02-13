@@ -3,19 +3,34 @@ import querystring from 'querystring'
 export default{
     namespaced:true,
     state:{
-        categorys:[]
+        categorys:[],
+        total:''
     },
     mutations:{
         SET_CATEGORYS(state,categorys){
             state.categorys=categorys
+        },
+        SET_TOTAL(state,total){
+            state.total=total
         }
     },
     actions:{
         //查询所有栏目
-        findAllcategory({commit}){
-            request.get('category/findAll').then((res)=>{
-            commit('SET_CATEGORYS',res.data)
-        })
+        // findAllcategory({commit}){
+        //     request.get('category/findAll').then((res)=>{
+        //     commit('SET_CATEGORYS',res.data)
+        // })
+        // },
+        //分页查询
+        queryCategory({commit},list){
+            request({
+                method:'POST',
+                url:'/category/query',
+                data:querystring.stringify(list)
+            }).then((res)=>{
+                commit('SET_CATEGORYS',res.data.list)
+                commit('SET_TOTAL',res.data.total)
+            })
         },
         //保存栏目信息
         saveCategory({dispatch},categoryForm){

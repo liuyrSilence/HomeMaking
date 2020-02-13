@@ -138,7 +138,6 @@
                 <!-- 表格 -->
                 <!-- 模态框 -->
                 <el-dialog title="派单" :visible.sync="dialogFormVisible">
-                {{waiterId}}
                     <el-radio v-for='r in waiters' v-model="waiterId" :label="r.id" >{{r.realname}}</el-radio>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="close">取 消</el-button>
@@ -340,6 +339,10 @@ import {mapState,mapActions} from 'vuex'
 export default {
     data(){
         return {
+            list:{
+                page:0,
+                pageSize:6
+            },
             activeName:'first',
             dialogFormVisible:false,
             waiterId:'',
@@ -351,11 +354,11 @@ export default {
         this.findAllwaiter()
     },
     computed: {
-        ...mapState('order',['order','order1','order2','order3','order4','order5','order6']),
+        ...mapState('order',['total','order','order1','order2','order3','order4','order5','order6']),
         ...mapState('waiter',['waiters'])
     },
     methods: {
-        ...mapActions('order',['findAllorder','sendOrder']),
+        ...mapActions('order',['findAllorder','sendOrder','queryOrder']),
         ...mapActions('waiter',['findAllwaiter']),
         //派单
         detailsHandler(id){
@@ -380,7 +383,12 @@ export default {
             message: '派单成功',
             type: 'success'
             });
-        }
+        },
+        // //分页
+        // changePageNum(page){
+        //         this.list.page = page-1;
+        //         this.queryOrder(this.list)
+        // },
     },
 }
 </script>

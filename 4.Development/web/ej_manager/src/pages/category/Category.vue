@@ -3,16 +3,10 @@
         <!-- 按钮 -->
         <el-button type="primary" size="small" @click='toAddHandler'>添加</el-button>
         <div class="select">
-            <el-select v-model="categoryForm" placeholder="请选择">
-            <el-option
-            v-for="item in categorys"
-            :key="item.id"
-            :value="item.name"
-            :label="item.name"
-            >
-            </el-option>
-        </el-select>
-        <el-button type="primary" size="small" @click='searchHandler'>查询</el-button>
+            <el-input  v-model="list.name" clearable=true placeholder='请输入栏目名称'></el-input>
+            <div class='btn'>
+            <el-button type="primary" @click="submitHanlderbyStatus" size="small">查询</el-button>
+            </div>
         </div>
         <!-- 按钮 -->
         <!-- 表格 -->
@@ -55,8 +49,10 @@
         <!-- 表格 -->
         <!-- 分页 -->
         <el-pagination
-            layout="prev, pager, next"
-            :total="50">
+            layout="total,prev, pager, next"
+            @current-change="changePageNum"
+            :page-size="this.list.pageSize"
+            :total="total">
         </el-pagination>
         <!-- 分页 -->
         <!-- 模态框 -->
@@ -87,6 +83,10 @@ import {mapState,mapActions} from 'vuex'
 export default {
     data(){
         return {
+            list:{
+                page:0,
+                pageSize:6
+            },
             title:'添加栏目信息',
             dialogFormVisible:false,
             form:{},
@@ -113,13 +113,13 @@ export default {
         }
     },
     created() {
-        this.findAllcategory()
+        this.queryCategory(this.list)
     },
     computed: {
-        ...mapState('category',['categorys']),
+        ...mapState('category',['categorys','total']),
     },
     methods: {
-        ...mapActions('category',['findAllcategory','saveCategory','deleteCategory','searchCategoryById']),
+        ...mapActions('category',['queryCategory','findAllcategory','saveCategory','deleteCategory','searchCategoryById']),
         //添加打开模态框
         toAddHandler(){
             this.form={}
@@ -148,12 +148,22 @@ export default {
         },
         //删除栏目信息
         deleteHandler(id){
+             this.$confirm('此操作将永久删除这条数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
             this.deleteCategory(id)
-            this.$message({
-            showClose: true,
-            message: '删除成功',
-            type: 'success'
-            });
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
         },
          //修改订单信息
         editHandler(custermerForm){
@@ -168,14 +178,29 @@ export default {
         //根据栏目名称查询
         searchHandler(){
             this.searchCategoryById(this.categoryForm)
+        },
+        //分页
+        changePageNum(page){
+                this.list.page = page-1;
+                this.queryCategory(this.list)
+        },
+        //模糊查询
+        submitHanlderbyStatus(){
+            this.queryCategory(this.list)
         }
     },
 }
 </script>
 <style scoped>
 .select{
+    width:200px;
     margin-left: 5em;
     margin-top: -2em;
+    margin-bottom:1em;
+}
+.btn{
+    margin-left: 13em;
+    margin-top: -34px;
 }
 .upload{
     margin-left:9em;

@@ -3,19 +3,34 @@ import querystring from 'querystring'
 export default{
     namespaced:true,
     state:{
-        products:[]
+        products:[],
+        total:''
     },
     mutations:{
         SET_PRODUCTS(state,products){
             state.products=products
+        },
+        SET_TOTAL(state,total){
+            state.total=total
         }
     },
     actions:{
         //查询所有订单
-        findAllproduct({commit}){
-            request.get('product/findAll').then((res)=>{
-            commit('SET_PRODUCTS',res.data)
-        })
+        // findAllproduct({commit}){
+        //     request.get('product/findAll').then((res)=>{
+        //     commit('SET_PRODUCTS',res.data)
+        // })
+        // },
+        //分页查询产品信息
+        queryProduct({commit},list){
+            request({
+                method:'POST',
+                url:'/product/query',
+                data:querystring.stringify(list)
+            }).then((res)=>{
+                commit('SET_PRODUCTS',res.data.list)
+                commit('SET_TOTAL',res.data.total)
+            })
         },
         //保存订单信息
         saveProduct({dispatch},productForm){

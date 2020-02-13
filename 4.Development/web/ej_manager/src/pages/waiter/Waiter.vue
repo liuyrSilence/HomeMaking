@@ -54,7 +54,12 @@
         </el-table>
         <!-- 表格 -->
         <!-- 分页 -->
-        
+        <el-pagination
+            layout="total,prev, pager, next"
+            @current-change="changePageNum"
+            :page-size="this.list.pageSize"
+            :total="total">
+        </el-pagination>
         <!-- 分页 -->
         <!-- 模态框 -->
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
@@ -97,6 +102,10 @@ import {mapState,mapActions} from 'vuex'
 export default {
     data(){
         return {
+            list:{
+                page:0,
+                pageSize:6
+            },
             title:'添加员工信息',
             form:{},
             ruleForm:{
@@ -135,13 +144,13 @@ export default {
         }
     },
     created(){
-        this.findAllwaiter()
+        this.queryWaiter(this.list)
     },
     computed:{
-        ...mapState('waiter',['waiters'])
+        ...mapState('waiter',['waiters','total'])
     },
     methods:{
-        ...mapActions('waiter',['findAllwaiter','saveWaiter','deleteWaiter']),
+        ...mapActions('waiter',['queryWaiter','findAllwaiter','saveWaiter','deleteWaiter']),
         //去添加，打开模态框
         toAddHandler(){
             this.form={}
@@ -170,12 +179,22 @@ export default {
         },
         //删除员工信息
         deleteHandler(id){
+            this.$confirm('此操作将永久删除这条数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
             this.deleteWaiter(id)
-            this.$message({
-            showClose: true,
-            message: '删除成功',
-            type: 'success'
-            });
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
         },
         //修改员工信息
         editHandler(custermerForm){
@@ -186,7 +205,12 @@ export default {
         //详情页面
         detailsHandler(id){
             this.$router.push({name:'waiterDetails',params:{id:id}})
-        }
+        },
+        //分页
+        changePageNum(page){
+                this.list.page = page-1;
+                this.queryWaiter(this.list)
+        },
     }
 }
 </script>
