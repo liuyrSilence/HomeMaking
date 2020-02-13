@@ -1,8 +1,9 @@
-import {post} from '../../http/axios'
+import {post,get} from '../../http/axios'
 export default {
     namespaced:true,
     state: {
-        products:[]
+        products:[],
+        // productById:[]
     },
     getters: {
         productCustomerFilter(state){
@@ -14,15 +15,25 @@ export default {
     mutations :{
         refreshProducts(state,products){
             state.products = products
-        }
+        },
+        // refreshProductById(state,productById){
+        //     state.productById = productById
+        // }
     },
     actions :{
         // 查找所有商品分类信息
         async QueryProducts({commit},params) {
             let response = await post('/product/query',params)
-            
+            // 为产品添加number属性
+            response.data.list.forEach(item=>{
+                item.number = 0;
+            })
             // console.log('response',response)
             commit('refreshProducts',response.data.list)
-        }
+        },
+        // async finProductById(context,params){
+        //     let res = await get('/product/findByCategoryId',{id:params})
+        //     context.commit('refreshProductsById',res.data)
+        // }
     }
  }

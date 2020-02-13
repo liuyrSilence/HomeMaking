@@ -56,12 +56,12 @@ export default {
         backListHandler(){
             let form = {
                 id:this.$route.query.id,
-                customerId:this.$route.query.customerId,
-                telephone:this.$route.query.telephone,
-                province:this.$route.query.province,
-                city:this.$route.query.city,
-                area:this.$route.query.area,
-                address:this.$route.query.address
+                customerId:this.customerId,
+                telephone:this.telephone,
+                province:this.province,
+                city:this.city,
+                area:this.area,
+                address:this.address
             }
             this.$router.push({path:'/manager/address'})
             

@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/vant.js'
+import moment from 'moment'
 import './common.css'
 
 // 全局注册自定义组件
@@ -14,6 +15,14 @@ Vue.component('briup-fulllayout',FullLayout)
 Vue.component('briup-order-item',OrderItem)
 Vue.component('briup-address-item',AddressItem)
 Vue.component('briup-product-item',ProductItem)
+
+// 全局注册过滤器
+Vue.filter('datefmt',function(val){
+  if(val){
+    return moment(val).format('YYYY-MM-DD HH:mm:ss')
+  }
+  return val;
+})
 
 Vue.config.productionTip = false
 

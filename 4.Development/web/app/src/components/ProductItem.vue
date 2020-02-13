@@ -7,13 +7,20 @@
       </van-col>
       <van-col :offset="1" :span="19">
         <div> <strong>名称：</strong> {{data.name}}</div>
-        <div> <strong>价格：</strong> {{data.price}}</div>
         <div> <strong>描述：</strong> {{data.description}}</div>
+        <div style="color:red"> <strong>价格：</strong> ￥{{data.price}}</div>
+        <div> <van-stepper 
+                v-model="data.number" 
+                :min="0" 
+                @change="numChangeHandler(data)" />
+        </div>
+        <!-- {{data}} -->
       </van-col>
     </van-row>
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
 export default {
   props:['data'],
   data(){
@@ -22,7 +29,18 @@ export default {
     }
   },
   methods:{
-    
+    ...mapMutations('shopcar',['addShopcar']),
+    numChangeHandler(val){
+      let orderLine = {
+        productId:val.id,
+        productName:val.name,
+        price:val.price,
+        number:val.number
+      }
+      // console.log('val',val)
+      // console.log('orderLine',orderLine)
+      this.addShopcar(orderLine)
+    }
   }
 }
 </script>

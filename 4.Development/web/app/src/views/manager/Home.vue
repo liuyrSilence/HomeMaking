@@ -3,27 +3,25 @@
     <!-- 顶部导航栏 -->
     <div class="title">
       <van-row>
-        <van-col span="6">
-          <van-icon size="45" style="padding:12px" name="cross" color="#333333"/>
+        <van-col span="8">
+          <van-icon size="30" @click="CloseHome" style="padding:16px" name="cross" color="#333333"/>
         </van-col>
-        <van-col span="14" style="font-size:26px;color:#333333;padding:16px;">e洁家政服务平台</van-col>
-        <van-col span="4">
-          <van-icon color="#333333" size="45" style="padding:12px" name="chat-o" />
-        </van-col>
+        <van-col span="16" style="font-size:20px;color:#333333;padding:16px;text-align:left">e洁家政服务平台</van-col>
       </van-row>
     </div>
     <!-- /顶部导航栏 -->
 
     <!-- 轮播图区域 -->
     <header>
-      <!-- <img src="../../assets/home.jpg" alt=""> -->
-      <van-swipe class="my-swipe" :height="260"  :autoplay="3000" indicator-color="white">
+      <van-swipe class="my-swipe" :height="260" :autoplay="3000" indicator-color="white">
         <van-swipe-item >
-          <img src="../../assets/home.jpg" alt="">
+          <!-- <img src="../../assets/home.jpg" alt=""> -->
+          e洁家政1
         </van-swipe-item>
 
         <van-swipe-item>
-          <img src="../../assets/home1.jpg" alt="">
+          <!-- <img src="../../assets/home1.jpg" alt=""> -->
+          e洁家政2
         </van-swipe-item>
       </van-swipe>
     </header>
@@ -71,6 +69,7 @@ export default {
     this.QueryProducts({page:0,pageSize:4});
   },
   methods:{
+    ...mapActions('user',['logout']),
     ...mapActions('category',['findAllCategories']),
     ...mapActions('product',['QueryProducts']),
     // 页面跳转至商品分类，各个产品
@@ -79,6 +78,13 @@ export default {
     },
     toProductListHandler(id,activeKey){
       this.$router.push({path:'/manager/product_list',query:{id,activeKey}})
+    },
+    // 跳转至登录页面
+    CloseHome(){
+      this.logout()
+      .then(()=>{
+        this.$router.push({path:'/login'})
+      })
     }
   }
 }
@@ -86,16 +92,15 @@ export default {
 
 <style scoped>
 .my-swipe .van-swipe-item {
+  color: #fff;
+  font-size: 20px;
+  line-height: 150px;
+  text-align: center;
+  background-color: #39a9ed;
   overflow: hidden;
 }
-.title {
-  height:70px;
-}
-.home {
-  padding-bottom: 50px;
-}
 .header {
-  height: 260px;
+  /* width: 2000px; */
   overflow: hidden;
 }
 .header img {
