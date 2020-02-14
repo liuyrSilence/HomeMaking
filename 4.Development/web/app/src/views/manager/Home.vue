@@ -18,7 +18,6 @@
           <!-- <img src="../../assets/home.jpg" alt=""> -->
           e洁家政1
         </van-swipe-item>
-
         <van-swipe-item>
           <!-- <img src="../../assets/home1.jpg" alt=""> -->
           e洁家政2
@@ -34,8 +33,7 @@
         v-for="(c,index) in categories"
         :key="c.id"
         :icon="c.icon"
-        :text="c.name"
-      />
+        :text="c.name"/>
     </van-grid>
     <!-- {{categories}} -->
     <!-- /栏目，商品分类区域 -->

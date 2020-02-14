@@ -6,7 +6,7 @@
                 <van-col :span="6" class="line_left">
                     <van-icon size="26" name="location-o" />
                 </van-col>
-                <van-col :span="18" class="line_right">
+                <van-col @click="SelectAddressHandler" :span="18" class="line_right">
                     <div class="label">服务地址</div>
                     <div>
                         <van-col :span=8>姓名：{{addresses[0].customerId}}</van-col>
@@ -103,6 +103,11 @@ export default {
     methods: {
         ...mapActions('address',['findAllAddresses']),
         ...mapActions('order',['SaveOrder']),
+        // 选择服务地址
+        SelectAddressHandler(){
+            this.$router.push({path:'/manager/address'})
+            
+        },
         OrderConfirmHandler(){
             // alert("确认订单")
             // 保存订单信息
