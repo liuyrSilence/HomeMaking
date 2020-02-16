@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 顶部导航栏 -->
-        <briup-fulllayout title="编辑地址">
+        <briup-fullpagelayout title="编辑地址" @back="backHandler">
             <div class="address_edit" >
                 <div class="edit">
                     <!-- {{$route.query}} -->
@@ -21,7 +21,7 @@
                     type="warning">确定</van-button>
                 <!-- /编辑地址 -->
             </div>
-        </briup-fulllayout>
+        </briup-fullpagelayout>
         <!-- /顶部导航栏 -->
     </div>
 </template>
@@ -43,6 +43,7 @@ export default {
         ...mapState('address',['addresses'])
     },
     created() {
+        // 利用this.$this.query获取参数
         this.customerId = this.$route.query.customerId,
         this.telephone = this.$route.query.telephone
         this.province = this.$route.query.province
@@ -52,6 +53,10 @@ export default {
     },
     methods: {
         ...mapActions('address',['findAllAddresses','SaveOrUpdateAddress']),
+        // 回退
+        backHandler(){
+            this.$router.back();
+        },
         // 回到地址列表页面
         backListHandler(){
             let form = {

@@ -1,6 +1,6 @@
 <template>
     <div> 
-        <briup-fulllayout title="新增地址">
+        <briup-fullpagelayout title="新增地址" @back="backHandler">
             <div class="address" >
                 <!-- 地址列表 -->
                 <div class="add">
@@ -18,7 +18,7 @@
                 <van-button @click="backListHandler()" size="large" type="warning">确定</van-button>
                 <!-- /新增地址 -->
             </div>
-        </briup-fulllayout>
+        </briup-fullpagelayout>
     </div>
 </template>
 
@@ -48,6 +48,10 @@ export default {
     },
     methods: {
         ...mapActions('address',['findAllAddresses','SaveOrUpdateAddress']),
+        // 回退
+        backHandler(){
+            this.$router.back();
+        },
         // 回到地址列表页面
         backListHandler(){
             let form = {

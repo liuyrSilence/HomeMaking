@@ -1,6 +1,6 @@
 <template>
     <div class="conform">
-        <briup-fulllayout title="订单确认">
+        <briup-fullpagelayout title="订单确认" @back="backHandler">
             <!-- 服务地址 -->
             <van-row class="line">
                 <van-col :span="6" class="line_left">
@@ -79,7 +79,7 @@
             <!-- 确定订单 -->
             <van-button size="large" @click="OrderConfirmHandler" type="warning">确认订单</van-button>
             <!-- /确定订单 -->
-        </briup-fulllayout>
+        </briup-fullpagelayout>
     </div>
 </template>
 
@@ -98,15 +98,28 @@ export default {
         ...mapGetters('shopcar',['total']),
     },
     created() {
-        this.findAllAddresses()     
+        this.findAllAddresses()  
+        var vm = this
+        if(this.$route.query.province != null){
+            setTimeout(function(){
+                vm.addresses[0].province = vm.$route.query.province
+                vm.addresses[0].city = vm.$route.query.city
+                vm.addresses[0].area = vm.$route.query.area
+                vm.addresses[0].address = vm.$route.query.address
+            },400)
+        }
+        
     },
     methods: {
         ...mapActions('address',['findAllAddresses']),
         ...mapActions('order',['SaveOrder']),
+        // 回退
+        backHandler(){
+            this.$router.push({path:'/manager/product_list'})
+        },
         // 选择服务地址
         SelectAddressHandler(){
             this.$router.push({path:'/manager/address'})
-            
         },
         OrderConfirmHandler(){
             // alert("确认订单")

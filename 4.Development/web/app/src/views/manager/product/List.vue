@@ -1,6 +1,6 @@
 <template>
     <div class="product">
-        <briup-fulllayout title="产品列表">
+        <briup-fullpagelayout title="产品列表" @back="backHandler">
             <van-row>
                 <!-- 侧边标签栏 -->
                 <van-col span="4">
@@ -33,7 +33,7 @@
                 <van-col :offset="16" :span="4" @click="toConfirmOrderHandler">立即下单</van-col>
             </van-row>
             <!-- /底部总额 -->
-        </briup-fulllayout>
+        </briup-fullpagelayout>
     </div>
 </template>
 
@@ -64,6 +64,10 @@ export default {
     methods: {
         ...mapActions('category',['findAllCategories']),
         ...mapActions('product',['QueryProducts']),
+        // 回退
+        backHandler(){
+            this.$router.push({path:'/manager/home'});
+        },
         // 下单页面
         toConfirmOrderHandler(){
             this.$router.push({path:'/manager/order_conform'})

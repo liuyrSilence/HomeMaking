@@ -8,10 +8,12 @@ import './common.css'
 
 // 全局注册自定义组件
 import FullLayout from './components/FullLayout'
+import FullPageLayout from './components/FullPageLayout'
 import OrderItem from './components/OrderItem'
 import ProductItem from './components/ProductItem'
 import AddressItem from './components/AddressItem'
 Vue.component('briup-fulllayout',FullLayout)
+Vue.component('briup-fullpagelayout',FullPageLayout)
 Vue.component('briup-order-item',OrderItem)
 Vue.component('briup-address-item',AddressItem)
 Vue.component('briup-product-item',ProductItem)

@@ -15,11 +15,11 @@
     <header>
       <van-swipe class="my-swipe" :height="260" :autoplay="3000" indicator-color="white">
         <van-swipe-item >
-          <!-- <img src="../../assets/home.jpg" alt=""> -->
+          <img src="../../assets/home.jpg" alt="">
           e洁家政1
         </van-swipe-item>
         <van-swipe-item>
-          <!-- <img src="../../assets/home1.jpg" alt=""> -->
+          <img src="../../assets/home1.jpg" alt="">
           e洁家政2
         </van-swipe-item>
       </van-swipe>
