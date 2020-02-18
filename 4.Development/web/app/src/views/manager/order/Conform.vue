@@ -17,7 +17,6 @@
                             {{addresses[0].area}} 
                             {{addresses[0].address}}
                         </van-col> 
-                        <!-- {{addresses}}   -->
                     </div>
                 </van-col>
             </van-row>
@@ -119,8 +118,9 @@ export default {
         },
         // 选择服务地址
         SelectAddressHandler(){
-            this.$router.push({path:'/manager/address'})
+            this.$router.push({path:'/manager/confirm_address'})
         },
+        // 确认订单
         OrderConfirmHandler(){
             // alert("确认订单")
             // 保存订单信息

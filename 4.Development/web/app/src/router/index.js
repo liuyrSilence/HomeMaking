@@ -11,6 +11,7 @@ import Address from '../views/manager/address/List'
 import AddressEdit from '../views/manager/address/Edit'
 import AddressAdd from '../views/manager/address/Add'
 import OrderConform from '../views/manager/order/Conform'
+import ConfirmAddress from '../views/manager/order/Confirm_address'
 // 登录页面
 import Login from '../views/Login'
 import { getToken } from '../utils/auth'
@@ -71,6 +72,9 @@ const routes = [
     },{
       path: 'order_conform',
       component: OrderConform
+    },{
+      path: 'confirm_address',
+      component: ConfirmAddress
     }]
   },
   {

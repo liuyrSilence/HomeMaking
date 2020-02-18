@@ -27,6 +27,7 @@ export default {
             }
             // 调用接口完后保存
             let response = await post_obj_array('/order/save',data)
+            console.log("data",data)
             // 清空购物车
             commit('shopcar/clearShopcar',null,{root:true})
             return response

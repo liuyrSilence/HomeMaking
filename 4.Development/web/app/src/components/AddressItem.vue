@@ -1,10 +1,8 @@
 <template>
   <div class="address_item">
     <van-row >
-      <van-col :span="2">
-        <!-- <div class="yuan"></div> -->
-      </van-col>
-      <van-col :span="19" @click="onAddressHandler" >
+      <van-col :span="2"></van-col>
+      <van-col :span="19" >
         <div>
           {{data.customerId}}&nbsp; {{data.telephone}}
         </div>
@@ -34,15 +32,12 @@ export default {
   },
   methods: {
     ...mapActions('address',['deleteAddressById']),
-    // 选择地址
-    onAddressHandler(){
-      console.log(this.data)
-      this.$router.push({path:'/manager/order_conform',query:this.data})
-    },
+    // 修改地址
     editAddressHandler(data){
       // console.log(data,'==')
       this.$router.push({path:'/manager/address_edit',query:data})
     },
+    // 删除地址
     deleteAddressHandler(){
       // alert("是否删除该地址")
       Dialog.confirm({
@@ -63,14 +58,6 @@ export default {
   padding: .5em;
   border-radius: 5px;
   background: #ffffff;
-}
-.address_item .yuan {
-  margin: 0 auto;
-  width: 1.2em;
-  height: 1.2em;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  
 }
 .address_item .option {
   text-align:center;
