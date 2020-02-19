@@ -19,15 +19,15 @@ export default {
     },
     actions: {
         // 保存订单
-        async SaveOrder({commit,rootState}){
-            let data = {
-                customerId:rootState.user.info.id,
-                addressId:rootState.address.addresses[0].id,
-                orderLines:Array.from(rootState.shopcar.orderLines.values())
-            }
+        async SaveOrder({commit},data){
+            // let data = {
+            //     customerId:rootState.user.info.id,
+            //     addressId:rootState.address.addresses[0].id,
+            //     orderLines:Array.from(rootState.shopcar.orderLines.values())
+            // }
             // 调用接口完后保存
             let response = await post_obj_array('/order/save',data)
-            console.log("data",data)
+            // console.log("data",data)
             // 清空购物车
             commit('shopcar/clearShopcar',null,{root:true})
             return response

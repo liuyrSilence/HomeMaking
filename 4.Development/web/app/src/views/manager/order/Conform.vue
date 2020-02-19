@@ -95,6 +95,7 @@ export default {
         ...mapState('address',['addresses']),
         ...mapState('shopcar',['orderLines']),
         ...mapGetters('shopcar',['total']),
+        ...mapState('user',['info'])
     },
     created() {
         this.findAllAddresses()  
@@ -122,9 +123,22 @@ export default {
         },
         // 确认订单
         OrderConfirmHandler(){
-            // alert("确认订单")
             // 保存订单信息
-            this.SaveOrder()
+            // 如果没有获到id参数，即未更改地址id，则为默认第一个
+            if(this.$route.query.id == null){
+                var obj = {
+                    addressId:this.addresses[0].id,
+                    customerId:this.info.id,
+                    orderLines:Array.from(this.orderLines.values())
+                }
+            }else{
+                var obj = {
+                    addressId:this.$route.query.id,
+                    customerId:this.info.id,
+                    orderLines:Array.from(this.orderLines.values())
+                }
+            }
+            this.SaveOrder(obj)
             .then((response)=>{
                 this.$notify({
                     type:'success',

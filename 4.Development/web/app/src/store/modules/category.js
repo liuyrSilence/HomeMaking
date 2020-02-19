@@ -1,4 +1,4 @@
-import {get} from '../../http/axios'
+import {get,post} from '../../http/axios'
 export default {
     namespaced:true,
     state: {
@@ -14,6 +14,11 @@ export default {
         async findAllCategories({commit}) {
             let response = await get('/category/findAll')
             // console.log('response',response)
+            commit('refreshCategories',response.data)
+        },
+        // 分页查询商品栏目信息
+        async QueryCategories({commit},params){
+            let response = await post('/category/query',params)
             commit('refreshCategories',response.data)
         }
     }

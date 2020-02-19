@@ -30,10 +30,13 @@
     <van-grid :column-num="3">
       <van-grid-item
         @click="toProductHandler(c.id,index)"
-        v-for="(c,index) in categories"
+        v-for="(c,index) in categories.list"
         :key="c.id"
         :icon="c.icon"
         :text="c.name"/>
+        <van-grid-item>
+          <van-icon @click="ShowCategoriesHandler(index)" name="shop-collect-o" size="2.5em" color="#1989fa" info="更多"/>
+        </van-grid-item>
     </van-grid>
     <!-- {{categories}} -->
     <!-- /栏目，商品分类区域 -->
@@ -63,13 +66,17 @@ export default {
     ...mapState('product',['products']),
   },
   created(){
-    this.findAllCategories();
+    this.QueryCategories({page:0,pageSize:5});
     this.QueryProducts({page:0,pageSize:4});
   },
   methods:{
     ...mapActions('user',['logout']),
-    ...mapActions('category',['findAllCategories']),
+    ...mapActions('category',['QueryCategories']),
     ...mapActions('product',['QueryProducts']),
+    // 页面跳转产品分类，显示更多的栏目
+    ShowCategoriesHandler(index){
+      // this.$router.push({path:'/manager/product_list',query:index})
+    },
     // 页面跳转至商品分类，各个产品
     toProductHandler(id,activeKey){
       this.$router.push({path:'/manager/product_list',query:{id,activeKey}})
