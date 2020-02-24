@@ -35,7 +35,12 @@
         :icon="c.icon"
         :text="c.name"/>
         <van-grid-item>
-          <van-icon @click="ShowCategoriesHandler(index)" name="shop-collect-o" size="2.5em" color="#1989fa" info="更多"/>
+          <van-icon 
+          @click="ShowCategoriesHandler(obj)"
+           name="shop-collect-o" 
+           size="2.5em" 
+           color="#1989fa" 
+           info="更多"/>
         </van-grid-item>
     </van-grid>
     <!-- {{categories}} -->
@@ -44,8 +49,8 @@
     <!-- 产品管理 -->
     <van-grid :column-num="2">
       <van-grid-item
-        @click="toProductListHandler(p.id)"
-        v-for="p in products"
+        @click="toProductListHandler(obj)"
+        v-for="(p) in products"
         :key="p.id">
         <van-image :src="p.photo" />
         <div>{{p.name}}</div>
@@ -61,6 +66,11 @@
 import {mapState, mapActions} from 'vuex'
 
 export default {
+  data (){
+    return{
+      obj:''
+    }
+  },
   computed:{
     ...mapState('category',['categories']),
     ...mapState('product',['products']),
@@ -74,15 +84,25 @@ export default {
     ...mapActions('category',['QueryCategories']),
     ...mapActions('product',['QueryProducts']),
     // 页面跳转产品分类，显示更多的栏目
-    ShowCategoriesHandler(index){
-      // this.$router.push({path:'/manager/product_list',query:index})
+    ShowCategoriesHandler(){
+      var obj = {
+        id:this.categories.list[0].id,
+        activeKey:0
+      }
+      this.$router.push({path:'/manager/product_list',query:obj})
     },
-    // 页面跳转至商品分类，各个产品
+    // 栏目区域 页面跳转至商品分类，各个产品
     toProductHandler(id,activeKey){
       this.$router.push({path:'/manager/product_list',query:{id,activeKey}})
     },
+    // 产品区域 页面跳转商品分类
     toProductListHandler(id,activeKey){
-      this.$router.push({path:'/manager/product_list',query:{id,activeKey}})
+      var obj = {
+        id:this.categories.list[0].id,
+        activeKey:0
+      }
+      this.$router.push({path:'/manager/product_list',query:obj})
+      // this.$router.push({path:'/manager/product_list',query:{id,activeKey}})
     },
     // 跳转至登录页面
     CloseHome(){

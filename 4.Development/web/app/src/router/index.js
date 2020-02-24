@@ -12,6 +12,12 @@ import AddressEdit from '../views/manager/address/Edit'
 import AddressAdd from '../views/manager/address/Add'
 import OrderConform from '../views/manager/order/Conform'
 import ConfirmAddress from '../views/manager/order/Confirm_address'
+import Details from '../views/manager/order/Details'
+import Register from '../views/Register'
+import Money from '../views/manager/money/Money'
+import Recharge from '../views/manager/money/Recharge'
+import Withdraw from '../views/manager/money/Withdraw'
+
 // 登录页面
 import Login from '../views/Login'
 import { getToken } from '../utils/auth'
@@ -49,8 +55,14 @@ const routes = [
       path: 'home',
       component: Home,
     },{
-      path: 'order',
-      component: Order,
+      path: 'money',
+      component: Money
+    },{
+      path: 'recharge',
+      component: Recharge
+    },{
+      path: 'withdraw',
+      component: Withdraw
     },{
       path: 'product_list',
       component: Product,
@@ -70,17 +82,28 @@ const routes = [
       path: 'address_add',
       component: AddressAdd
     },{
+      path: 'order',
+      component: Order,
+    },{
       path: 'order_conform',
       component: OrderConform
     },{
       path: 'confirm_address',
       component: ConfirmAddress
+    },{
+      path: 'order_details',
+      component: Details,
     }]
   },
   {
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
   },
   
 ]

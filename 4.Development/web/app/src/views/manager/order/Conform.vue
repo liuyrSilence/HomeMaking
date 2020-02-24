@@ -103,7 +103,7 @@ export default {
         if(this.$route.query.province != null){
             setTimeout(function(){
                 vm.addresses[0].province = vm.$route.query.province
-                vm.addresses[0].city = vm.$route.query.city
+                this.addresses[0].city = vm.$route.query.city
                 vm.addresses[0].area = vm.$route.query.area
                 vm.addresses[0].address = vm.$route.query.address
             },400)

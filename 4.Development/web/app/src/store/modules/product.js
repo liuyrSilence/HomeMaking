@@ -31,9 +31,5 @@ export default {
             // console.log('response',response)
             commit('refreshProducts',response.data.list)
         },
-        // async finProductById(context,params){
-        //     let res = await get('/product/findByCategoryId',{id:params})
-        //     context.commit('refreshProductsById',res.data)
-        // }
     }
  }

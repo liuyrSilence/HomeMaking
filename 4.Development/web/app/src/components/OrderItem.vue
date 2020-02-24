@@ -4,6 +4,7 @@
       <van-col span="12">订单编号: {{data.id}}</van-col>
       <van-col span="12" class="status">{{data.status}}</van-col>
     </van-row>
+    {{data}}
     <van-row>
       <van-col :span="24" :offset="1">
         <div v-if="data.waiter!=null">
@@ -14,7 +15,7 @@
           员工联系方式：
           {{data.waiter.telephone}} 
         </div>
-        <div>总价：{{data.total}}</div>
+        <!-- <div>总价：{{data.total}}</div> -->
         <div>服务时间：{{data.orderTime | datefmt}}</div>
         <div>服务地点：
           {{data.address.province}} 
@@ -24,6 +25,9 @@
         </div>
       </van-col>
     </van-row>
+    <div class="text-right" style="margin-bottom:.5em" @click="toOrderDetails">
+      详情
+    </div>
     <div class="text-right">
       共计 1 个服务，合计￥ {{data.total}}
     </div>
@@ -33,6 +37,11 @@
 export default {
   props:{
     data:{type:Object}
+  },
+  methods: {
+    toOrderDetails(){
+      this.$router.push({path:'/manager/order_details'})
+    }
   }
 }
 </script>

@@ -7,7 +7,7 @@
                     <van-sidebar v-model="activeKey">
                         <van-sidebar-item 
                         @click="categoryId = c.id" 
-                        v-for="c in categories" 
+                        v-for="c in categories.list" 
                         :title="c.name" 
                         :key="c.id" />
                     </van-sidebar>
@@ -54,7 +54,7 @@ export default {
         ...mapGetters('shopcar',['total'])
     },
     created() {
-        this.findAllCategories();
+        this.QueryCategories({page:0,pageSize:100});
         // 查询所有产品信息
         this.QueryProducts({page:0,pageSize:100});
         // this.finProductById(this.$route.query.id)
@@ -62,7 +62,7 @@ export default {
         this.activeKey = this.$route.query.activeKey
     },
     methods: {
-        ...mapActions('category',['findAllCategories']),
+        ...mapActions('category',['QueryCategories']),
         ...mapActions('product',['QueryProducts']),
         // 回退
         backHandler(){

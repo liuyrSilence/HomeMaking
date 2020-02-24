@@ -14,8 +14,9 @@
         <van-icon @click="editAddressHandler(data)" name="edit" size="larger" /> &nbsp;
         <van-icon @click="deleteAddressHandler()" name="delete" size="larger" />
       </van-col>
+      <!-- {{data}} -->
     </van-row>
-    <!-- {{data}} -->
+    
   </div>
 </template>
 <script>
@@ -32,7 +33,7 @@ export default {
   },
   methods: {
     ...mapActions('address',['deleteAddressById']),
-    // 修改地址
+    // 修改地址,data为当前行数据
     editAddressHandler(data){
       // console.log(data,'==')
       this.$router.push({path:'/manager/address_edit',query:data})

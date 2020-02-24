@@ -43,7 +43,7 @@ export default {
         ...mapState('address',['addresses'])
     },
     created() {
-        // 利用this.$this.query获取参数
+        // 利用this.$router.query获取参数
         this.customerId = this.$route.query.customerId,
         this.telephone = this.$route.query.telephone
         this.province = this.$route.query.province

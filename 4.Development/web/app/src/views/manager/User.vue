@@ -1,29 +1,31 @@
 <template>
   <div class="user">
+    <!-- 标题 -->
     <div class="title">
       <van-nav-bar title="我的" />
     </div>
+    <!-- /标题 -->
+    <!-- 头像信息 -->
     <div class="header">
       <div class="photo">
-        <img src="../../assets/user.png" alt=""/>
+        <van-uploader :before-read="beforeRead"  >
+          <img src="../../assets/user.png" alt=""/>
+        </van-uploader>
       </div>
       <div class="name">您好，{{info.name}}</div>
     </div>
-    <!-- 余额 -->
-    <div class="money">
-      <div class="left">
-        <p class="one" style="font-size:18px">账户余额</p>
-        <p class="two" style="font-size:24px;color:red">￥888.00</p>
-      </div>
-      <div class="right">充值</div>
-    </div>
-    <!-- /余额 -->
+    <!-- /头像信息 -->
+
+    <!-- 账户余额 -->
+    <van-cell icon="balance-o" title="账户余额" value="￥158.33" is-link to="money" />
+    <!-- /账户余额 -->
+
     <!-- 常用地址 -->
-    <van-cell icon="location-o" size="large" title="常用地址" is-link to="address" />
+    <van-cell icon="location-o" title="常用地址" is-link to="address" />
     <!-- /常用地址 -->
     
     <!-- 联系我们 -->
-    <van-cell icon="phone-o" size="large" title="联系我们" @click="show = true" />
+    <van-cell icon="phone-o" title="联系我们" @click="show = true" />
     <van-overlay :show="show" @click="show = false"  >
       <div class="wrapper" @click.stop>
         <div class="block">
@@ -62,6 +64,24 @@ export default {
   },
   methods:{
     ...mapActions('user',['logout']),
+    // 返回布尔值
+    beforeRead(file) {
+      if (file.type !== 'image/jpeg') {
+        Toast('请上传 jpg 格式图片');
+        return false;
+      }
+      return true;
+    },
+    asyncBeforeRead(file) {
+      return new Promise((resolve, reject) => {
+        if (file.type !== 'image/jpeg') {
+          Toast('请上传 jpg 格式图片');
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    },
     // 关闭联系我们模态框
     closeModal(){
       this.show = false
@@ -83,33 +103,6 @@ export default {
 </script>
 
 <style scoped>
-.money::after{
-  clear:both;
-  content:'';
-  display:block
-}
-.money{
-  padding: 0 6em;
-  border: 1px solid #ccc;
-  margin: 2em;
-  border-radius: 10px;
-}
-.money .left{
-  float: left;
-  /* width:150px; */
-  /* line-height:120px; */
-  text-align: center;
-}
-.money .right{
-  float: right;
-  /* width:150px; */
-  line-height:120px;
-  text-align: center;
-  font-size:24px;
-  color: red;
-  /* border-left: 1px solid #ccc */
-
-}
 .wrapper {
   display: flex;
   align-items: center;
@@ -122,10 +115,10 @@ export default {
   background-color: #fff;
 }
 .header {
-  padding-top: 46px;
+  padding-top: 25px;
   text-align: center;
+  margin-bottom:2.5em;
   /* background: #1659a0; */
-  margin-bottom: 2em;
 }
 .header .photo {
   margin: 0 auto;
@@ -135,14 +128,14 @@ export default {
   box-sizing: border-box;
   border:1px solid #ccc;
   overflow:hidden;
-  padding: 1em;
+  padding: .5em;
 }
 .header .name {
   margin: 0 auto;
   width:200px;
-  margin-top: 2em;
+  margin-top: 1.5em;
   line-height: 3em;
-  font-size: 16px;
+  font-size: 14px;
   border:1px solid #ccc;
   border-radius: 10px;
 }
@@ -158,7 +151,7 @@ export default {
   text-align: center;
   border: 1px solid #ededed;
   border-radius: 1.5em;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 </style>

@@ -21,6 +21,9 @@ export default {
 }
 </script>
 <style scoped>
+  .van-nav-bar{
+    border-bottom:1px solid #ccc;
+  }
   .full_page_layout{
     position: absolute;
     top: 0;

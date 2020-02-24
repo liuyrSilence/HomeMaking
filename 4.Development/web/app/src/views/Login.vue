@@ -30,6 +30,13 @@
         plain round 
         @click="loginHandler" 
         style="width:100%">登录</van-button>
+        <!-- 注册 -->
+        <div class="register">
+          <button @click="RegisterHandler">
+            尚未注册，点击注册
+          </button>
+        </div>
+        <!-- /注册 -->
       </div>
     </div>
   </div>
@@ -46,6 +53,12 @@ export default {
   },
   methods:{
     ...mapActions("user",["login"]),
+    // 注册
+    RegisterHandler(){
+      // alert("注册")
+      this.$router.push({path:'/register'})
+    },
+    // 登录
     loginHandler(){
       this.login(this.form)
       .then(()=>{
@@ -57,6 +70,14 @@ export default {
 }
 </script>
 <style scoped>
+.register{
+  margin:1em;
+  font-size:12px;
+  color:green;
+}
+.register button{
+  border:none
+}
 .header {
   height: 140px;
   padding: 50px;
