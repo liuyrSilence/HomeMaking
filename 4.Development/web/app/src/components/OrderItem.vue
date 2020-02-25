@@ -4,7 +4,7 @@
       <van-col span="12">订单编号: {{data.id}}</van-col>
       <van-col span="12" class="status">{{data.status}}</van-col>
     </van-row>
-    {{data}}
+    <!-- {{data}} -->
     <van-row>
       <van-col :span="24" :offset="1">
         <div v-if="data.waiter!=null">
@@ -17,7 +17,7 @@
         </div>
         <!-- <div>总价：{{data.total}}</div> -->
         <div>服务时间：{{data.orderTime | datefmt}}</div>
-        <div>服务地点：
+        <div v-if="data.address">服务地点：
           {{data.address.province}} 
           {{data.address.city}}
           {{data.address.area}}
@@ -25,7 +25,7 @@
         </div>
       </van-col>
     </van-row>
-    <div class="text-right" style="margin-bottom:.5em" @click="toOrderDetails">
+    <div class="text-right" style="margin-bottom:.5em" @click="toOrderDetails(data)">
       详情
     </div>
     <div class="text-right">
@@ -34,13 +34,22 @@
   </div>
 </template>
 <script>
+import {mapState,mapActions,mapGetters} from 'vuex'
+
 export default {
   props:{
     data:{type:Object}
   },
+  computed:{
+    ...mapState('address',['addresses']),
+    ...mapState('user',['info']),
+    ...mapState('shopcar',['orderLines']),
+
+
+  },
   methods: {
-    toOrderDetails(){
-      this.$router.push({path:'/manager/order_details'})
+    toOrderDetails(data){
+      this.$router.push({path:'/manager/order_details',query:data})
     }
   }
 }

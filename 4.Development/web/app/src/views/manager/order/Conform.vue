@@ -9,13 +9,13 @@
                 <van-col @click="SelectAddressHandler" :span="18" class="line_right">
                     <div class="label">服务地址</div>
                     <div>
-                        <van-col :span=8>姓名：{{addresses[0].customerId}}</van-col>
-                        <van-col :span=16>手机号：{{addresses[0].telephone}}</van-col>
+                        <van-col :span=8>姓名：{{addresses.customerId}}</van-col>
+                        <van-col :span=16>手机号：{{addresses.telephone}}</van-col>
                         <van-col>地址：
-                            {{addresses[0].province}} 
-                            {{addresses[0].city}} 
-                            {{addresses[0].area}} 
-                            {{addresses[0].address}}
+                            {{addresses.province}} 
+                            {{addresses.city}} 
+                            {{addresses.area}} 
+                            {{addresses.address}}
                         </van-col> 
                     </div>
                 </van-col>
@@ -102,10 +102,10 @@ export default {
         var vm = this
         if(this.$route.query.province != null){
             setTimeout(function(){
-                vm.addresses[0].province = vm.$route.query.province
-                this.addresses[0].city = vm.$route.query.city
-                vm.addresses[0].area = vm.$route.query.area
-                vm.addresses[0].address = vm.$route.query.address
+                vm.addresses.province = vm.$route.query.province
+                vm.addresses.city = vm.$route.query.city
+                vm.addresses.area = vm.$route.query.area
+                vm.addresses.address = vm.$route.query.address
             },400)
         }
         
@@ -127,7 +127,7 @@ export default {
             // 如果没有获到id参数，即未更改地址id，则为默认第一个
             if(this.$route.query.id == null){
                 var obj = {
-                    addressId:this.addresses[0].id,
+                    addressId:this.addresses.id,
                     customerId:this.info.id,
                     orderLines:Array.from(this.orderLines.values())
                 }
@@ -138,6 +138,7 @@ export default {
                     orderLines:Array.from(this.orderLines.values())
                 }
             }
+            
             this.SaveOrder(obj)
             .then((response)=>{
                 this.$notify({

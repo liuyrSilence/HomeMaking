@@ -2,7 +2,7 @@ import {get, post, post_obj_array} from '../../http/axios'
 export default {
     namespaced: true,
     state:{
-        orders:[]
+        orders:[],
     },
     getters: {
         // 根据订单状态进行分类过滤
@@ -15,7 +15,7 @@ export default {
     mutations: {
         refreshOrder(state,orders){
             state.orders = orders
-        }
+        },
     },
     actions: {
         // 保存订单
@@ -37,6 +37,6 @@ export default {
             let customerId = rootState.user.info.id
             let response = await get('/order/query',{customerId});
             commit('refreshOrder',response.data)
-          }
+          },
     }
 }

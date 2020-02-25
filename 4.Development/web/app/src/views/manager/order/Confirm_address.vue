@@ -2,7 +2,7 @@
   <div class="confirm_address">
       <briup-fullpagelayout title="地址列表" @back="backHandler">
        <div class="list">
-            <briup-conform-address v-for="address in addresses" :key="address.id" :data="address"></briup-conform-address>
+            <briup-conform-address v-for="address in conformAddresses" :key="address.id" :data="address"></briup-conform-address>
         </div>
       </briup-fullpagelayout>
       <!-- {{data}} -->
@@ -15,7 +15,7 @@ import {mapState,mapActions} from 'vuex'
 export default {
   props:['data'],
   computed: {
-    ...mapState('address',['addresses'])
+    ...mapState('address',['conformAddresses'])
   },
   created() {
     this.findAllAddresses();
