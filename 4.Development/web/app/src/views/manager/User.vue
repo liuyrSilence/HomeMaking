@@ -42,6 +42,10 @@
     </van-overlay>
     <!-- /联系我们 -->
 
+    <!-- 我的评价 -->
+    <van-cell icon="star-o" title="我的评论" is-link @click="toCommentHandler(id)" />
+    <!-- /我的评价 -->
+    <!-- {{info}} -->
     <!-- 退出登录 -->
     <div class="btn" @click="logoutHandler">
       退出
@@ -57,6 +61,7 @@ import { Overlay } from 'vant';
 Vue.use(Overlay);
 
 export default {
+  props:['id'],
   data() {
     return {
       show: false
@@ -64,6 +69,10 @@ export default {
   },
   methods:{
     ...mapActions('user',['logout']),
+    // 跳转至评论
+    toCommentHandler(id){
+      this.$router.push({path:'/manager/comment',query:id})
+    },
     // 返回布尔值
     beforeRead(file) {
       if (file.type !== 'image/jpeg') {

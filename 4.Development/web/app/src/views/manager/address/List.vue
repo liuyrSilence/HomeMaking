@@ -4,7 +4,7 @@
             <div class="address" >
                 <!-- 地址列表 -->
                 <div class="list">
-                    <briup-address-item v-for="address in addresses" :key="address.id" :data="address"></briup-address-item>
+                    <briup-address-item v-for="address in conformAddresses" :key="address.id" :data="address"></briup-address-item>
                 </div>
                 <!-- /地址列表 -->
                 <!-- 新增地址 -->
@@ -24,7 +24,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('address',['addresses'])
+        ...mapState('address',['conformAddresses'])
     },
     created() {
         this.findAllAddresses();

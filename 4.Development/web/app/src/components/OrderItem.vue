@@ -49,7 +49,12 @@ export default {
   },
   methods: {
     toOrderDetails(data){
-      this.$router.push({path:'/manager/order_details',query:data})
+      this.$router.push({
+        path:'/manager/order_details',
+        query:{
+          data:JSON.stringify(data)
+        }
+      })
     }
   }
 }

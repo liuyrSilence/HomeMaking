@@ -6,6 +6,7 @@ import Home from '../views/manager/Home'
 import Order from '../views/manager/Order'
 import Product from '../views/manager/product/List'
 import Help from '../views/manager/Help'
+import Comment from '../views/manager/Comment'
 import User from '../views/manager/User'
 import Address from '../views/manager/address/List'
 import AddressEdit from '../views/manager/address/Edit'
@@ -69,6 +70,9 @@ const routes = [
     },{
       path: 'help',
       component: Help,
+    },{
+      path: 'comment',
+      component: Comment,
     },{
       path: 'user',
       component: User,

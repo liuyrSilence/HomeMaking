@@ -40,7 +40,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('address',['addresses'])
+        ...mapState('address',['conformAddresses'])
     },
     created() {
         // 利用this.$router.query获取参数
