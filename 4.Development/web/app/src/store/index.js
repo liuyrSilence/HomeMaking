@@ -10,6 +10,9 @@ import address from './modules/address'
 import order from './modules/order'
 import shopcar from './modules/shopcar'
 import comment from './modules/comment'
+import recharge from './modules/recharge'
+import register from './modules/register'
+import realname from './modules/realname'
 
 
 export default new Vuex.Store({
@@ -20,6 +23,9 @@ export default new Vuex.Store({
     address,
     order,
     shopcar,
-    comment
+    comment,
+    recharge,
+    register,
+    realname
   }
 })

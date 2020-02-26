@@ -8,6 +8,7 @@ import Product from '../views/manager/product/List'
 import Help from '../views/manager/Help'
 import Comment from '../views/manager/Comment'
 import User from '../views/manager/User'
+import Realname from '../views/manager/Realname'
 import Address from '../views/manager/address/List'
 import AddressEdit from '../views/manager/address/Edit'
 import AddressAdd from '../views/manager/address/Add'
@@ -76,6 +77,9 @@ const routes = [
     },{
       path: 'user',
       component: User,
+    },{
+      path: 'realname',
+      component: Realname,
     },{
       path: 'address',
       component: Address

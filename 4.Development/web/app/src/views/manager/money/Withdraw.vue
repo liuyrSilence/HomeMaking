@@ -51,7 +51,7 @@
             <!-- 全部提现 -->
             <van-row>
                 <van-col :span="10">
-                    <div style="font-size:12px;color:#ccc;margin-left:2em">当前零钱余额为158.33,</div>
+                    <div style="font-size:12px;color:#ccc;margin-left:2em">当前零钱余额为{{cusInfo.money}},</div>
                 </van-col>
                 <van-col :span="6">
                     <div style="font-size:12px;color:blue;margin-left:2em">全部提现</div>   
@@ -80,6 +80,9 @@ export default {
         show: false,
     }
   },
+  computed:{
+    ...mapState('user',['cusInfo'])
+  },
   methods:{
     // 充值
     WithdrawHandler(){
@@ -90,9 +93,7 @@ export default {
         this.$router.push({path:'/manager/money'})
     },
   },
-  computed:{
 
-  }
 }
 </script>
 

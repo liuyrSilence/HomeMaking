@@ -30,18 +30,17 @@
                 <van-col :span="4">
                     <van-field
                         style="font-size:28px;font-weight:bold;"
-                        v-model="value"
                         label="￥"/>
                 </van-col>
                 <van-col :span="20">
                     <van-field
                         readonly
                         clickable
-                        :value="value1"
-                        @touchstart.native.stop="show = true"
+                        :value="money"
+                        @touchstart.native.stop ="show = true"
                         />
                         <van-number-keyboard
-                        v-model="value1"
+                        v-model="money"
                         :show="show"
                         :maxlength="6"
                         @blur="show = false"
@@ -50,6 +49,8 @@
             </van-row>
         </div>
         <!-- /充值金额 -->
+        <!-- {{cusInfo}}
+        {{info}} -->
         <!-- 确认 -->
         <div class="btn" @click="RechargeHandler">
             充值
@@ -66,24 +67,34 @@ import {mapState, mapActions} from 'vuex'
 export default {
   data() {
     return {
-        value:'',
-        value1:'',
         show: false,
+        money:''
     }
   },
+  computed:{
+    ...mapState('user',['cusInfo','info']),
+    ...mapState('recharge',['money'])
+  },
+  created(){
+       
+  },
   methods:{
+      ...mapActions('recharge',['CustomerRecharge']),
     // 充值
     RechargeHandler(){
-        alert("充值")
+        this.params= {
+          id:this.info.id,
+          money:this.money
+      }
+      this.CustomerRecharge(this.params)
+      this.$router.push({path:'/manager/money'})
     },
     // 返回我的页面
     backHandler(){
         this.$router.push({path:'/manager/money'})
     },
   },
-  computed:{
 
-  }
 }
 </script>
 

@@ -67,7 +67,7 @@
                 </van-col>
                 <van-col :span="18" class="line_right">
                     <div class="label">支付方式</div>
-                    <div>第三方平台（支付宝）</div>
+                    <div>账户余额 ({{cusInfo.money}} 元)</div>
                 </van-col>
             </van-row>
             <van-popup v-model="show" position="bottom">
@@ -78,6 +78,7 @@
             <!-- 确定订单 -->
             <van-button size="large" @click="OrderConfirmHandler" type="warning">确认订单</van-button>
             <!-- /确定订单 -->
+            <!-- {{cusInfo}} -->
         </briup-fullpagelayout>
     </div>
 </template>
@@ -95,9 +96,10 @@ export default {
         ...mapState('address',['addresses']),
         ...mapState('shopcar',['orderLines']),
         ...mapGetters('shopcar',['total']),
-        ...mapState('user',['info'])
+        ...mapState('user',['info','cusInfo'])
     },
     created() {
+        this.FindCustomerById(this.info.id)
         this.findAllAddresses()  
         var vm = this
         if(this.$route.query.province != null){
@@ -112,7 +114,8 @@ export default {
     },
     methods: {
         ...mapActions('address',['findAllAddresses']),
-        ...mapActions('order',['SaveOrder']),
+        ...mapActions('order',['SaveOrder','findAllOrders']),
+        ...mapActions('user',['FindCustomerById']),
         // 回退
         backHandler(){
             this.$router.push({path:'/manager/product_list'})
@@ -138,16 +141,18 @@ export default {
                     orderLines:Array.from(this.orderLines.values())
                 }
             }
-            
             this.SaveOrder(obj)
             .then((response)=>{
                 this.$notify({
                     type:'success',
                     message:response.statusText
                 });
+                
+
             })
             // 路由跳转至订单页面
             this.$router.push({path:'/manager/order'})
+            this.findAllOrders()
         }
     }
 }

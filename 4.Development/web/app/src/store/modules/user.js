@@ -3,10 +3,14 @@ import {setToken,getToken,removeToken} from '../../utils/auth'
 export default {
   namespaced:true,
   state: {
+    cusInfo:{},
     token:getToken(),
     info:{} //用户信息
   },
   mutations: {
+    refreshCusInfoById(state,cusInfo){
+      state.cusInfo = cusInfo
+    },
     refreshInfo(state,info){
       state.info = info;
     },
@@ -15,11 +19,16 @@ export default {
     }
   },
   actions: {
+    // 根据顾客id获取顾客信息
+    async FindCustomerById({commit},id){
+      let response = await get('/customer/findCustomerById?id=' + id)
+      commit('refreshCusInfoById',response.data)
+    },
     // 登录
     async login(context,payload){
       // 1.登录
       let response = await post_json("/user/login",payload);
-      console.log("payload",payload)
+      // console.log("payload",payload)
       let token = response.data.token;
       // 2.将token缓存起来？localStorage
       setToken(token);
@@ -32,7 +41,7 @@ export default {
       let response = await get("/user/info",{token});
       // 将用户信息设置到info中
       await context.commit("refreshInfo",response.data)
-      console.log('info-end');
+      // console.log('info-end');
     },
     // 退出
     async logout(context){

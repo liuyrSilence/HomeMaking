@@ -12,10 +12,11 @@
                 <van-col span="4" style="padding-top:2em;"> 我的零钱</van-col>
             </van-row>
             <van-row type="flex" justify="center">
-                <van-col span="7" style="font-size:28px;font-weight:bold"> ￥158.33 </van-col>
+                <van-col span="7" style="font-size:28px;font-weight:bold"> ￥{{cusInfo.money}} </van-col>
             </van-row>
         </div>
         <!-- /余额显示 -->
+        <!-- {{info}} -->
         <!-- 按钮 -->
         <div class="btn" @click="ToRechargeHandler">
             充值
@@ -38,7 +39,14 @@ export default {
 
     }
   },
+  computed:{
+    ...mapState('user',['cusInfo','info'])
+  },
+  created(){
+    this.FindCustomerById(this.info.id)
+  },
   methods:{
+    ...mapActions('user',['FindCustomerById']),
     // 跳转至提现页面
     ToWithdrawHandler(){
         this.$router.push({path:'/manager/withdraw'})
@@ -52,9 +60,7 @@ export default {
         this.$router.push({path:'/manager/user'})
     },
   },
-  computed:{
-
-  }
+  
 }
 </script>
 

@@ -44,8 +44,6 @@ export default {
     ...mapState('address',['addresses']),
     ...mapState('user',['info']),
     ...mapState('shopcar',['orderLines']),
-
-
   },
   methods: {
     toOrderDetails(data){

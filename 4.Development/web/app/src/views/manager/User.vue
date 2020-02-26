@@ -17,12 +17,20 @@
     <!-- /头像信息 -->
 
     <!-- 账户余额 -->
-    <van-cell icon="balance-o" title="账户余额" value="￥158.33" is-link to="money" />
+    <van-cell icon="balance-o" title="账户余额" :value="cusInfo.money" is-link to="money" />
     <!-- /账户余额 -->
+
+    <!-- 实名认证 -->
+    <van-cell icon="manager-o" title="实名认证" is-link to="realname" />
+    <!-- /实名认证 -->
 
     <!-- 常用地址 -->
     <van-cell icon="location-o" title="常用地址" is-link to="address" />
     <!-- /常用地址 -->
+
+    <!-- 我的评价 -->
+    <van-cell icon="star-o" title="我的评论" is-link @click="toCommentHandler(id)" />
+    <!-- /我的评价 -->
     
     <!-- 联系我们 -->
     <van-cell icon="phone-o" title="联系我们" @click="show = true" />
@@ -41,11 +49,8 @@
       </div>
     </van-overlay>
     <!-- /联系我们 -->
-
-    <!-- 我的评价 -->
-    <van-cell icon="star-o" title="我的评论" is-link @click="toCommentHandler(id)" />
-    <!-- /我的评价 -->
     <!-- {{info}} -->
+    <!-- {{cusInfo}} -->
     <!-- 退出登录 -->
     <div class="btn" @click="logoutHandler">
       退出
@@ -67,8 +72,11 @@ export default {
       show: false
     }
   },
+  created(){
+    this.FindCustomerById(this.info.id)
+  },
   methods:{
-    ...mapActions('user',['logout']),
+    ...mapActions('user',['logout','FindCustomerById']),
     // 跳转至评论
     toCommentHandler(id){
       this.$router.push({path:'/manager/comment',query:id})
@@ -106,7 +114,7 @@ export default {
     }
   },
   computed:{
-    ...mapState("user",["info"])
+    ...mapState("user",["info",'cusInfo'])
   }
 }
 </script>

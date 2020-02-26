@@ -17,7 +17,7 @@ export default {
         // 添加评论
         async SaveComment({dispatch},form){
             let response = await post('/comment/saveOrUpdate',form)
-            dispatch('QueryComment',response.data)
+            // dispatch('QueryComment',response.data)
             // return response
         },
         // 分页查询评论

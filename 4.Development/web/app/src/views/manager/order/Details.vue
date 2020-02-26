@@ -30,7 +30,7 @@
                                  size="mini" 
                                  @click="showPopup">评论
                              </van-button>
-                        <div class="card" v-for="c in comments.list">
+                        <div class="card" v-for="c in comments.list" :key="c.id">
                             <div>订单：{{c.orderId}}</div>     
                             <div>评论内容：{{c.content}}</div>
                             <div>评论时间：{{c.commentTime | datefmt}}</div>
@@ -108,7 +108,9 @@ export default {
                 orderId:this.orderId,
                 content:this.content
             }
-            this.SaveComment(form)
+            this.SaveComment(form).then((response)=>{
+                this.QueryComment(this.params)
+            })
         },
         // 弹出模态框
         showPopup(){
