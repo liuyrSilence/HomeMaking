@@ -14,12 +14,6 @@ export default {
         }
     },
     actions: {
-        // 添加评论
-        async SaveComment({dispatch},form){
-            let response = await post('/comment/saveOrUpdate',form)
-            // dispatch('QueryComment',response.data)
-            // return response
-        },
         // 分页查询评论
         async QueryComment({commit},params){
             let response = await post('/comment/query',params)

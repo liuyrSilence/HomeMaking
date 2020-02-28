@@ -16,12 +16,20 @@
           {{data.waiter.telephone}} 
         </div>
         <!-- <div>总价：{{data.total}}</div> -->
+        <div>
+          <van-row v-for="line of data.orderLines.values()" :key="line.productId">
+            <van-col :span="8">产品名称：{{line.product.name}}</van-col>
+          </van-row>
+        </div>
         <div>服务时间：{{data.orderTime | datefmt}}</div>
         <div v-if="data.address">服务地点：
           {{data.address.province}} 
           {{data.address.city}}
           {{data.address.area}}
           {{data.address.address}}
+        </div>
+        <div style="margin-top:.5em">
+          <van-button plain hairline size="small" type="warning" @click="PaymoneyHandler">确认支付</van-button>
         </div>
       </van-col>
     </van-row>
@@ -31,6 +39,7 @@
     <div class="text-right">
       共计 1 个服务，合计￥ {{data.total}}
     </div>
+    <!-- {{data.orderLines}} -->
   </div>
 </template>
 <script>
@@ -46,6 +55,15 @@ export default {
     ...mapState('shopcar',['orderLines']),
   },
   methods: {
+    // 确认支付
+    PaymoneyHandler(){
+      var orderid = this.data.id
+      var customer_id = this.info.id
+      var order_money = this.data.total
+      let url = 'http://134.175.100.63:5588/order/paymoney?orderid='+orderid+'&customer_id='+customer_id+'&order_name=%E8%A3%A4%E5%AD%90&order_money='+order_money+'&description=%E5%B9%B2%E5%87%80'
+      window.open(url,'_blank')
+    },
+    // 调转订单详情页面
     toOrderDetails(data){
       this.$router.push({
         path:'/manager/order_details',

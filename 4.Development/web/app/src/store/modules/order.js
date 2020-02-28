@@ -18,6 +18,11 @@ export default {
         },
     },
     actions: {
+        // 支付订单金额
+        async PaymoneyOrder({commit},params){
+            
+            
+        },
         // 保存订单
         async SaveOrder({commit},data){
             // let data = {

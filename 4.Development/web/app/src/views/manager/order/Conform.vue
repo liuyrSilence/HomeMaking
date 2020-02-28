@@ -79,6 +79,7 @@
             <van-button size="large" @click="OrderConfirmHandler" type="warning">确认订单</van-button>
             <!-- /确定订单 -->
             <!-- {{cusInfo}} -->
+            <!-- {{orders}} -->
         </briup-fullpagelayout>
     </div>
 </template>
@@ -95,12 +96,14 @@ export default {
     computed: {
         ...mapState('address',['addresses']),
         ...mapState('shopcar',['orderLines']),
+        ...mapState('order',['orders']),
         ...mapGetters('shopcar',['total']),
         ...mapState('user',['info','cusInfo'])
     },
     created() {
         this.FindCustomerById(this.info.id)
         this.findAllAddresses()  
+        this.findAllOrders()
         var vm = this
         if(this.$route.query.province != null){
             setTimeout(function(){
@@ -147,12 +150,12 @@ export default {
                     type:'success',
                     message:response.statusText
                 });
-                
-
             })
             // 路由跳转至订单页面
             this.$router.push({path:'/manager/order'})
-            this.findAllOrders()
+            .then((res)=>{
+                this.findAllOrders()
+            }) 
         }
     }
 }

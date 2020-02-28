@@ -1,7 +1,7 @@
 <template>
     <div class="details">
         <briup-fullpagelayout title="订单详情" @back="backHandler">
-            <!-- {{JSON.parse($route.query.data)}} -->
+            <!-- {{JSON.parse($route.query.data).orderLines}} -->
             <van-row>
                 <van-col :span="2">
                 </van-col>
@@ -16,6 +16,12 @@
                     <div >
                     员工联系方式：{{JSON.parse($route.query.data).waiter.telephone}}
                     </div> -->
+                    <div>
+                        <van-row v-for="line of JSON.parse($route.query.data).orderLines.values()" :key="line.productId">
+                            <van-col :span="8">产品名称：{{line.product.name}}</van-col>
+                            <van-col :span="8">下单数量：x{{line.number}}</van-col>
+                        </van-row>
+                    </div>
                     <div>总价：{{JSON.parse($route.query.data).total}} 元</div>
                     <!-- <div>服务时间：{{{JSON.parse($route.query.data).orderTime | datefmt}} </div> -->
                     <div >服务地点：
@@ -45,7 +51,7 @@
             <!-- 获取当前订单号以及顾客编号 -->
             <van-field v-model="cusId" label="顾客编号：" />
             <van-field v-model="orderId" label="订单编号：" />
-            {{content}}
+            <!-- {{content}} -->
             <van-field v-model="content"
                 rows="4"
                 autosize
@@ -111,6 +117,7 @@ export default {
             this.SaveComment(form).then((response)=>{
                 this.QueryComment(this.params)
             })
+            
         },
         // 弹出模态框
         showPopup(){

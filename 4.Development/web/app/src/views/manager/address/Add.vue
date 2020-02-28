@@ -36,10 +36,10 @@ export default {
         }
     },
     computed: {
-
+        ...mapState('user',['info'])
     },
     created() {
-        this.customerId = this.$route.query.customerId,
+        this.customerId = this.info.id,
         this.telephone = this.$route.query.telephone
         this.province = this.$route.query.province
         this.city = this.$route.query.city
