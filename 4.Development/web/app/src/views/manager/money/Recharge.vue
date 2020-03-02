@@ -49,8 +49,8 @@
             </van-row>
         </div>
         <!-- /充值金额 -->
-        <!-- {{cusInfo}}
-        {{info}} -->
+        <!-- {{cusInfo}} -->
+        <!-- {{info}} -->
         <!-- 确认 -->
         <div class="btn" @click="RechargeHandler">
             充值
@@ -79,6 +79,7 @@ export default {
        
   },
   methods:{
+      ...mapActions('user',['FindCustomerById']),
       ...mapActions('recharge',['CustomerRecharge']),
     // 充值
     RechargeHandler(){
@@ -88,6 +89,7 @@ export default {
       }
       this.CustomerRecharge(this.params)
       this.$router.push({path:'/manager/money'})
+      this.FindCustomerById(this.info.id)
     },
     // 返回我的页面
     backHandler(){

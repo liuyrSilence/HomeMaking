@@ -2,48 +2,53 @@
     <div class="details">
         <briup-fullpagelayout title="订单详情" @back="backHandler">
             <!-- {{JSON.parse($route.query.data).orderLines}} -->
-            <van-row>
-                <van-col :span="2">
-                </van-col>
-                <van-col :span="22" :offset="1">
-                    <!-- 头像 -->
-                    <div class="photo">
-                        <img src="../../../assets/user.png" alt=""/>
-                    </div>
-                    <!-- <div>
-                    员工姓名：{{JSON.parse($route.query.data).waiter.realname}}
-                    </div>
-                    <div >
-                    员工联系方式：{{JSON.parse($route.query.data).waiter.telephone}}
-                    </div> -->
-                    <div>
-                        <van-row v-for="line of JSON.parse($route.query.data).orderLines.values()" :key="line.productId">
-                            <van-col :span="8">产品名称：{{line.product.name}}</van-col>
-                            <van-col :span="8">下单数量：x{{line.number}}</van-col>
-                        </van-row>
-                    </div>
-                    <div>总价：{{JSON.parse($route.query.data).total}} 元</div>
-                    <!-- <div>服务时间：{{{JSON.parse($route.query.data).orderTime | datefmt}} </div> -->
-                    <div >服务地点：
-                    {{JSON.parse($route.query.data).address.province}}
-                    {{JSON.parse($route.query.data).address.city}}
-                    {{JSON.parse($route.query.data).address.area}}
-                    {{JSON.parse($route.query.data).address.address}}
-                    </div>
-                    <div style="margin-top:1em">
-                    我的评价：<van-button style="margin-left:25em"
-                                 plain type="warning" 
-                                 size="mini" 
-                                 @click="showPopup">评论
-                             </van-button>
-                        <div class="card" v-for="c in comments.list" :key="c.id">
-                            <div>订单：{{c.orderId}}</div>     
-                            <div>评论内容：{{c.content}}</div>
-                            <div>评论时间：{{c.commentTime | datefmt}}</div>
-                        </div>
-                    </div>
-                </van-col>
-            </van-row>
+            <!-- 头像 -->
+            <div class="photo">
+                <img src="../../../assets/user.png" alt=""/>
+            </div>
+            <!-- <div>
+            员工姓名：{{JSON.parse($route.query.data).waiter.realname}}
+            </div>
+            <div >
+            员工联系方式：{{JSON.parse($route.query.data).waiter.telephone}}
+            </div> -->
+            <div class="order_details">
+                <div>
+                <van-row v-for="line of JSON.parse($route.query.data).orderLines.values()" :key="line.productId">
+                        <van-col :span="8">产品名称：{{line.product.name}}</van-col>
+                        <van-col :span="8">下单数量：x{{line.number}}</van-col>
+                    </van-row>
+                </div>
+                <div>总价：{{JSON.parse($route.query.data).total}} 元</div>
+                <div>服务时间：{{JSON.parse($route.query.data).orderTime | datefmt}} </div>
+                <div >服务地点：
+                {{JSON.parse($route.query.data).address.province}}
+                {{JSON.parse($route.query.data).address.city}}
+                {{JSON.parse($route.query.data).address.area}}
+                {{JSON.parse($route.query.data).address.address}}
+                </div>
+            </div>
+            <div class="my_comment">
+            我的评价：<van-button style="margin-left:20em"
+                            plain type="warning" 
+                            size="mini" 
+                            @click="showPopup">评论
+                        </van-button>
+            </div>               
+            <div class="card1">顾客：{{info.id}} & {{info.name}}</div>
+            <div class="card2" v-for="c in comments.list" :key='c.id'>
+                <!-- {{info}} -->
+                <van-row>
+                    <van-col span="6">
+                        <img style="width:5em" src="../../../assets/user.png" alt=""/>
+                    </van-col>
+                    <van-col span="18">
+                        <div>订单：{{c.orderId}}</div>     
+                        <div style="padding-top:.5em;padding-bottom:.5em">评论内容：{{c.content}}</div>
+                        <div>评论时间：{{c.commentTime | datefmt}}</div>
+                    </van-col>
+                </van-row>
+            </div>
             <!-- {{orders}} -->
         </briup-fullpagelayout>
         <!-- 模态框 -->
@@ -131,7 +136,39 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.all_comments{
+    margin-top:1em;
+    padding: .5em;
+    border-radius: 5px;
+    background: #f1f1f1;
+}
+.card2{
+  margin: .5em 1em;
+  padding: .5em;
+  border-radius: 5px;
+  background: #f1f1f1;
+}
+.card1{
+  margin: 1em;
+}
+.my_comment{
+    margin:1em;
+    padding-left: .5em;
+}
+.card{
+    margin-top:1em;
+    padding: .5em;
+    border-radius: 5px;
+    background: #f1f1f1;
+}
+.order_details{
+    margin: 1em 1em;
+    padding: .5em;
+    border-radius: 5px;
+    background: #f1f1f1;
+    /* border: 1px solid #f1f1f1; */
+}
 .photo {
   margin: 0 auto;
   width: 10em;

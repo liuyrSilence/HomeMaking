@@ -21,7 +21,7 @@
     <!-- /账户余额 -->
 
     <!-- 实名认证 -->
-    <van-cell icon="manager-o" title="实名认证" is-link to="realname" />
+    <!-- <van-cell icon="manager-o" title="实名认证" is-link to="realname" /> -->
     <!-- /实名认证 -->
 
     <!-- 常用地址 -->
@@ -120,6 +120,7 @@ export default {
 </script>
 
 <style scoped>
+
 .wrapper {
   display: flex;
   align-items: center;
