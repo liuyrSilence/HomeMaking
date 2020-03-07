@@ -2,12 +2,12 @@ import {get} from '../../http/axios'
 export default {
     namespaced:true,
     state: {
-        vcode:'',
+        vercode:'',
         cusregister:{}
     },
     mutations: {
-        refreshVcode(state,vcode){
-            state.vcode = vcode
+        refreshVcode(state,vercode){
+            state.vercode = vercode
         },
         refreshCusRegister(state,cusregister){
             state.cusregister = cusregister

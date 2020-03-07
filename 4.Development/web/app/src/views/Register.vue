@@ -38,7 +38,10 @@
 </template>
 <script>
 import {mapState,mapActions} from 'vuex'
+import Vue from 'vue';
+import { Toast } from 'vant';
 
+Vue.use(Toast);
 export default {
     data() {
     return {
@@ -48,7 +51,7 @@ export default {
     };
   },
   computed: {
-      ...mapState('register',['vcode','cusregister'])
+      ...mapState('register',['vercode','cusregister'])
   },
   methods:{
     ...mapActions('register',['GetVerCode','CustomerRegister']),

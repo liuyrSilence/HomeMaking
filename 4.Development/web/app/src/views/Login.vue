@@ -55,7 +55,6 @@ export default {
     ...mapActions("user",["login"]),
     // 注册
     RegisterHandler(){
-      // alert("注册")
       this.$router.push({path:'/register'})
     },
     // 登录

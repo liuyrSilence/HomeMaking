@@ -136,7 +136,6 @@ export default {
   padding-top: 25px;
   text-align: center;
   margin-bottom:2.5em;
-  /* background: #1659a0; */
 }
 .header .photo {
   margin: 0 auto;

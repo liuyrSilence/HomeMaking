@@ -2,11 +2,11 @@ import {get} from '../../http/axios'
 export default {
     namespaced:true,
     state: {
-        money:''
+        charge:''
     },
     mutations: {
-        refreshRecharge(state,money){
-            state.money = money
+        refreshRecharge(state,charge){
+            state.charge = charge
         }
     },
     actions: {

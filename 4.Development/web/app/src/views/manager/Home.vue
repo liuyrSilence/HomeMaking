@@ -3,10 +3,10 @@
     <!-- 顶部导航栏 -->
     <div class="title">
       <van-row>
-        <van-col span="8">
+        <van-col span="4">
           <van-icon size="30" @click="CloseHome" style="padding:16px" name="cross" color="#333333"/>
         </van-col>
-        <van-col span="16" style="font-size:20px;color:#333333;padding:16px;text-align:left">e洁家政服务平台</van-col>
+        <van-col :offset="2" span="18" style="font-size:20px;color:#333333;padding:16px;text-align:left">e洁家政服务平台</van-col>
       </van-row>
     </div>
     <!-- /顶部导航栏 -->

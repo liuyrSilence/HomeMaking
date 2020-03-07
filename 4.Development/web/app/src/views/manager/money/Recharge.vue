@@ -73,7 +73,7 @@ export default {
   },
   computed:{
     ...mapState('user',['cusInfo','info']),
-    ...mapState('recharge',['money'])
+    ...mapState('recharge',['charge'])
   },
   created(){
        
@@ -88,8 +88,10 @@ export default {
           money:this.money
       }
       this.CustomerRecharge(this.params)
+      .then(res=>{
       this.$router.push({path:'/manager/money'})
-      this.FindCustomerById(this.info.id)
+      this.FindCustomerById(this.info.id)      
+      })
     },
     // 返回我的页面
     backHandler(){

@@ -29,8 +29,8 @@
             </van-row>
             <!-- 底部总额 -->
             <van-row class="domn">
-                <van-col :span="4">总额 <strong>￥{{total}}</strong> </van-col>
-                <van-col :offset="16" :span="4" @click="toConfirmOrderHandler">立即下单</van-col>
+                <van-col :span="8">总额 <strong>￥{{total}}</strong> </van-col>
+                <van-col :offset="12" :span="4" @click="toConfirmOrderHandler">立即下单</van-col>
             </van-row>
             <!-- /底部总额 -->
         </briup-fullpagelayout>
