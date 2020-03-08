@@ -15,6 +15,7 @@
         stripe
         style="width: 100%">
         <el-table-column
+        align='center'
         prop="id"
         label="编号"
         width="80">
@@ -22,16 +23,15 @@
         <el-table-column
         align='center'
         prop="name"
-        label="栏目名称"
-        width="260">
+        label="栏目名称">
         </el-table-column>
         <el-table-column
         align='center'
         prop="num"
-        label="序号"
-        width="300">
+        label="序号">
         </el-table-column>
         <el-table-column
+        align='center'
         prop="parentId"
         label="父栏目">
         </el-table-column>

@@ -171,7 +171,7 @@ export const constantRoutes = [
         component: () => import('@/pages/custermer/Details'),
         name: 'details',
         hidden: true,
-        meta: { title: '详情页面'}
+        meta: { title: '详情页面' }
       }
     ]
   },
@@ -185,7 +185,7 @@ export const constantRoutes = [
         component: () => import('@/pages/product/details'),
         name: 'productDetails',
         hidden: true,
-        meta: { title: '产品详情'}
+        meta: { title: '产品详情' }
       }
     ]
   },
@@ -199,10 +199,44 @@ export const constantRoutes = [
         component: () => import('@/pages/waiter/Deteils'),
         name: 'waiterDetails',
         hidden: true,
-        meta: { title: '产品详情'}
+        meta: { title: '员工详情' }
       }
     ]
   },
+  {
+    path: '/orderDetails',
+    component: Layout,
+    redirect: '/orderDetails',
+    children: [
+      {
+        path: 'orderDetails',
+        component: () => import('@/pages/order/Order_details'),
+        name: 'orderDetails',
+        hidden: true,
+        meta: { title: '订单详情' }
+      }
+    ]
+  },
+  {
+    path: '/examine',
+    component: Layout,
+    redirect: '/examine',
+    meta: { title: '审核大厅', icon: 'user' },
+    children: [
+      {
+        path: 'waiterExamine',
+        component: () => import('@/pages/Examine/Waiter_E'),
+        name: 'waiterExamine',
+        meta: { title: '员工审核' }
+      },
+      {
+        path: 'CashExamine',
+        component: () => import('@/pages/Examine/Cash_E'),
+        name: 'CashExamine',
+        meta: { title: '提现审核' }
+      }
+    ]
+  }
 ]
 
 const createRouter = () => new Router({
