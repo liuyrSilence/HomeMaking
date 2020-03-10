@@ -14,6 +14,8 @@ import OrderItem from './components/OrderItem'
 import ProductItem from './components/ProductItem'
 import AddressItem from './components/AddressItem'
 
+import visibility from 'vue-visibility-change'
+Vue.use(visibility)
 Vue.component('briup-conform-address',Confirm_Address)
 Vue.component('briup-fullpagelayout',FullPageLayout)
 Vue.component('briup-order-item',OrderItem)

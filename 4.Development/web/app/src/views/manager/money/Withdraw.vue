@@ -50,7 +50,7 @@
             </van-row>
             <!-- 全部提现 -->
             <van-row>
-                <van-col :span="10">
+                <van-col :span="16">
                     <div style="font-size:12px;color:#ccc;margin-left:2em">当前零钱余额为{{cusInfo.money}},</div>
                 </van-col>
                 <van-col :span="6">

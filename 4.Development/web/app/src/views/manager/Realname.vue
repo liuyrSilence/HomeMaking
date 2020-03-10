@@ -19,10 +19,6 @@
 import {mapState,mapActions} from 'vuex'
 import { Toast } from 'vant';
 import axios from 'axios'
-// import Vue from 'vue';
-// import { Uploader } from 'vant';
-
-// Vue.use(Uploader);
 
 export default {
     data() {
@@ -57,25 +53,6 @@ export default {
     })
     //   console.log(file);
     },
-    // 返回布尔值
-    // beforeRead(file) {
-    //   if (file.type !== 'image/jpeg') {
-    //     Toast('请上传 jpg 格式图片');
-    //     return false;
-    //   }
-    //   return true;
-    // },
-    // // 返回 Promise
-    // asyncBeforeRead(file) {
-    //   return new Promise((resolve, reject) => {
-    //     if (file.type !== 'image/jpeg') {
-    //       Toast('请上传 jpg 格式图片');
-    //       reject();
-    //     } else {
-    //       resolve();
-    //     }
-    //   });
-    // },
     // 返回我的页面
     backHandler(){
         this.$router.push({path:'/manager/user'})

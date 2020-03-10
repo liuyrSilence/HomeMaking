@@ -30,6 +30,9 @@
         </div>
         <div style="margin-top:.5em">
           <van-button plain hairline size="small" type="warning" @click="PaymoneyHandler">确认支付</van-button>
+          <van-button plain hairline size="small" type="warning" style="margin-left:.5em"
+            @click="ConfirmHandler">确认订单
+          </van-button>
         </div>
       </van-col>
     </van-row>
@@ -39,29 +42,54 @@
     <div class="text-right">
       共计 1 个服务，合计￥ {{data.total}}
     </div>
-    <!-- {{data.orderLines}} -->
+    <!-- {{data}} -->
+    <!-- {{cusInfo}} -->
   </div>
 </template>
 <script>
 import {mapState,mapActions,mapGetters} from 'vuex'
+import Vue from 'vue';
+import { Toast } from 'vant';
 
+Vue.use(Toast);
 export default {
   props:{
     data:{type:Object}
   },
   computed:{
     ...mapState('address',['addresses']),
-    ...mapState('user',['info']),
+    ...mapState('user',['info','cusInfo']),
     ...mapState('shopcar',['orderLines']),
   },
+  created() {
+    this.FindCustomerById(this.info.id)
+  },
   methods: {
+    ...mapActions('user',['FindCustomerById']),
+    ...mapActions('order',['ConfirmOrder','findAllOrders','payHandler']),
     // 确认支付
-    PaymoneyHandler(){
+    PaymoneyHandler(){    
+      if(this.data.total <= this.cusInfo.money){
+        var orderid = this.data.id
+        var customer_id = this.info.id
+        var order_money = this.data.total
+        this.payHandler({orderid,customer_id,order_money}).then(()=>{
+        // console.log('1111')
+        // this.findAllOrders()
+        })
+      }else{
+        Toast('余额不足,请充值')
+      }
+      // let url = 'http://134.175.100.63:5588/order/paymoney?orderid='+orderid+'&customer_id='+customer_id+'&order_name=%E8%A3%A4%E5%AD%90&order_money='+order_money+'&description=%E5%B9%B2%E5%87%80'
+      // console.log(document.hidden,'===')
+      // window.open(url,'_blank')
+      // this.findAllOrders()
+    },
+    // 确认订单
+    ConfirmHandler(){
       var orderid = this.data.id
-      var customer_id = this.info.id
-      var order_money = this.data.total
-      let url = 'http://134.175.100.63:5588/order/paymoney?orderid='+orderid+'&customer_id='+customer_id+'&order_name=%E8%A3%A4%E5%AD%90&order_money='+order_money+'&description=%E5%B9%B2%E5%87%80'
-      window.open(url,'_blank')
+      // 确认订单（为员工分配佣金）
+      this.ConfirmOrder(orderid)
     },
     // 调转订单详情页面
     toOrderDetails(data){

@@ -18,10 +18,17 @@ export default {
         },
     },
     actions: {
-        // 支付订单金额
-        async PaymoneyOrder({commit},params){
-            
-            
+        
+        async payHandler({dispatch},params){
+            // console.log(params,'===')
+            let url = 'http://134.175.100.63:5588/order/paymoney?orderid='+params.orderid+'&customer_id='+params.customer_id+'&order_name=%E8%A3%A4%E5%AD%90&order_money='+params.order_money+'&description=%E5%B9%B2%E5%87%80'
+            window.open(url,'_blank')
+        },
+        // 确认订单
+        async ConfirmOrder({dispatch},orderId){
+            let response = await get('/order/confirmOrder?orderId='+orderId)
+            dispatch('findAllOrders')
+            // return response
         },
         // 保存订单
         async SaveOrder({commit},data){

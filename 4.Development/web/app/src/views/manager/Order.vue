@@ -1,5 +1,5 @@
 <template>
-  <div class="order">
+  <div class="order" v-visibility-change="change">
     <van-nav-bar title="我的订单" />
     <van-tabs v-model="active" color="#1659a0">
       <van-tab title="全部">
@@ -19,6 +19,13 @@
       <van-tab title="待接单">
         <briup-order-item 
           v-for="order in ordersStatusFilter('待接单')"
+          :key="order.id"  
+          :data='order'>
+        </briup-order-item>
+      </van-tab> 
+      <van-tab title="待确认">
+        <briup-order-item 
+          v-for="order in ordersStatusFilter('待确认')"
           :key="order.id"  
           :data='order'>
         </briup-order-item>
@@ -49,7 +56,13 @@ export default {
     this.findAllOrders()
   },
   methods: {
-    ...mapActions('order',['findAllOrders'])
+    ...mapActions('order',['findAllOrders']),
+    change(evt,hidden){
+      if(hidden === false){
+        this.findAllOrders()
+        console.log(hidden,'====')
+      }
+    }
   }
 
 }
